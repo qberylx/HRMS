@@ -50,6 +50,21 @@ class cm01_mohon extends Model
             return FALSE;
     }
 
+    public function selectAll(){
+        $sql = "select a.cm01_id, b.namasistem, c.namamodul, a.cm01_klasimodul, a.cm01_klasiproses, ".
+        "a.cm01_klasiskrin, a.cm01_klasibug, a.cm01_klasilaporan, a.cm01_ulasan  from cm01_mohon a ".
+        "left join cm_sistem b on b.id = a.cm01_sysid ".
+        "left join cm_modul c on c.id = a.cm01_modulid;";
+        $result = $this->db->query($sql);
+        if ($result->getNumRows() > 0) {
+            foreach ($result->getResult() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
+
 }
 
 ?>

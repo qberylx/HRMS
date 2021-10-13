@@ -1,7 +1,7 @@
 $(document).on("change","#namaSistem",function(){
     var html = ""
     $.ajax({
-        url: "fetch/ajaxModul?sistemid=" + $(this).val(),
+        url: "../fetch/ajaxModul?sistemid=" + $(this).val(),
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
