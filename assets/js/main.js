@@ -12,3 +12,9 @@ $(document).on("change","#namaSistem",function(){
         }
     });
 })
+
+$(document).on("click",".img-lampiran",function(){
+    console.log($(this).find('img').attr('src'))
+    $('.imgpreview').attr('src', $(this).find('img').attr('src'));
+    $('#modal-lampiran').modal('show'); 
+})

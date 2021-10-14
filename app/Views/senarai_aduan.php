@@ -31,6 +31,7 @@
                                     <th class="text-center">Ulasan</th>
                                     <th class="text-center">Sistem</th>
                                     <th class="text-center">Modul</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Tindakan</th>
                                 </tr>
                                 <?php
@@ -42,8 +43,9 @@
                                         <td><?=$val->cm01_ulasan?></td>
                                         <td><?=$val->namasistem?></td>
                                         <td><?=substr($val->namamodul,0,50)?></td>
+                                        <td><?=$val->butiranstatusdok?></td>
                                         <td class="text-center">
-                                            <a type="button" class="btn btn-info">
+                                            <a href="<?=site_url("/home/complaint/".$val->cm01_id)?>" type="button" class="btn btn-info">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                         </td>

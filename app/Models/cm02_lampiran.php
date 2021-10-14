@@ -21,6 +21,19 @@ class cm02_lampiran extends Model
             return FALSE;
     }
 
+    public function SelWheremohonID($id){
+        $sql = "SELECT * FROM cm02_lampiran where cm02_mohonid = ".$id;
+        $data = [];
+        $result = $this->db->query($sql);
+        if ($result->getNumRows() > 0) {
+            foreach ($result->getResult() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return $data;
+    }
+
 }
 
 ?>

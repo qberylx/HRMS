@@ -87,7 +87,7 @@
 
 							<div class="form-group">
 								<label for="lampiran">Lampiran</label>
-								<input type="file" name="lampiran[]" id="lampiran" class="custom-file-input" multiple>
+								<input type="file" name="lampiran[]" id="lampiran" class="custom-file-input" accept="image/*" multiple>
 								<p class="help-block custom-file-label"></p>
 								<p class="help-block">Sambil menekan butang <i>ctrl</i> untuk memilih lebih dari 1 lampiran</p>
 							</div>

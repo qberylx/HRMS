@@ -29,11 +29,11 @@ class Submit extends BaseController
             foreach($lampiran as $item) {
                 if ($item->isValid() && !$item->hasMoved()) {
                     $newName = $item->getRandomName();
-                    $item->move(WRITEPATH.'uploads', $newName);
+                    $item->move('/public/uploads', $newName);
                     $dataLampiran = array(
                         'mohonid' => $result,
                         'namadokumen' => $newName,
-                        'lokasi' => WRITEPATH.'uploads'
+                        'lokasi' => '/public/uploads'
                     );
                     $this->cm02_lampiran->addLampiran($dataLampiran);
                 }

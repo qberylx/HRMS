@@ -52,9 +52,10 @@ class cm01_mohon extends Model
 
     public function selectAll(){
         $sql = "select a.cm01_id, b.namasistem, c.namamodul, a.cm01_klasimodul, a.cm01_klasiproses, ".
-        "a.cm01_klasiskrin, a.cm01_klasibug, a.cm01_klasilaporan, a.cm01_ulasan  from cm01_mohon a ".
+        "a.cm01_klasiskrin, a.cm01_klasibug, a.cm01_klasilaporan, a.cm01_ulasan, d.butiran as butiranstatusdok from cm01_mohon a ".
         "left join cm_sistem b on b.id = a.cm01_sysid ".
-        "left join cm_modul c on c.id = a.cm01_modulid;";
+        "left join cm_modul c on c.id = a.cm01_modulid ".
+        "left join cm_statusdok d on d.kod = a.cm01_statusdok ";
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
             foreach ($result->getResult() as $row) {
@@ -65,6 +66,20 @@ class cm01_mohon extends Model
         return false;
     }
 
+    public function selWhereID($id){
+        $sql = "select a.cm01_id, b.namasistem, c.namamodul, a.cm01_klasimodul, a.cm01_klasiproses, ".
+        "a.cm01_klasiskrin, a.cm01_klasibug, a.cm01_klasilaporan, a.cm01_ulasan, a.cm01_datecreated, d.butiran as butiranstatusdok from cm01_mohon a ".
+        "left join cm_sistem b on b.id = a.cm01_sysid ".
+        "left join cm_modul c on c.id = a.cm01_modulid ".
+        "left join cm_statusdok d on d.kod = a.cm01_statusdok ".
+        "WHERE a.cm01_id =". $id;
+        $result = $this->db->query($sql);
+        if ($result->getNumRows() > 0) {
+            return $result->getRow();
+        }
+        return false;
+    }
+    
 }
 
 ?>
