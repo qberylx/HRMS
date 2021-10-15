@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2021 at 05:05 AM
+-- Generation Time: Oct 15, 2021 at 04:43 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -38,6 +38,8 @@ CREATE TABLE `cm01_mohon` (
   `cm01_klasibug` tinyint(1) NOT NULL DEFAULT 0,
   `cm01_klasilaporan` tinyint(1) NOT NULL DEFAULT 0,
   `cm01_ulasan` text NOT NULL,
+  `cm01_statusdok` varchar(2) NOT NULL DEFAULT '00',
+  `cm01_ulasantindakan` text NOT NULL,
   `cm01_datecreated` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -45,13 +47,13 @@ CREATE TABLE `cm01_mohon` (
 -- Dumping data for table `cm01_mohon`
 --
 
-INSERT INTO `cm01_mohon` (`cm01_id`, `cm01_userid`, `cm01_sysid`, `cm01_modulid`, `cm01_klasimodul`, `cm01_klasiproses`, `cm01_klasiskrin`, `cm01_klasibug`, `cm01_klasilaporan`, `cm01_ulasan`, `cm01_datecreated`) VALUES
-(1, 1, 1, 1, 0, 1, 1, 0, 0, 'xcxxcxcxcxcxc', '2021-10-11 02:10:20'),
-(2, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '2021-10-11 02:36:02'),
-(3, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '2021-10-11 02:37:13'),
-(4, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '2021-10-11 02:37:55'),
-(5, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '2021-10-11 02:38:49'),
-(6, 1, 1, 7, 0, 1, 1, 0, 0, 'testing fully', '2021-10-11 07:23:23');
+INSERT INTO `cm01_mohon` (`cm01_id`, `cm01_userid`, `cm01_sysid`, `cm01_modulid`, `cm01_klasimodul`, `cm01_klasiproses`, `cm01_klasiskrin`, `cm01_klasibug`, `cm01_klasilaporan`, `cm01_ulasan`, `cm01_statusdok`, `cm01_ulasantindakan`, `cm01_datecreated`) VALUES
+(1, 1, 1, 1, 0, 1, 1, 0, 0, 'xcxxcxcxcxcxc', '00', '', '2021-10-11 02:10:20'),
+(2, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '00', '', '2021-10-11 02:36:02'),
+(3, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '00', '', '2021-10-11 02:37:13'),
+(4, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '00', '', '2021-10-11 02:37:55'),
+(5, 1, 2, 2, 1, 0, 0, 0, 0, 'hahahahahaha', '00', '', '2021-10-11 02:38:49'),
+(6, 1, 1, 7, 0, 1, 1, 0, 0, 'testing fully', '00', '', '2021-10-11 07:23:23');
 
 -- --------------------------------------------------------
 
@@ -153,6 +155,30 @@ INSERT INTO `cm_sistem` (`id`, `kod`, `namasistem`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cm_statusdok`
+--
+
+CREATE TABLE `cm_statusdok` (
+  `id` bigint(20) NOT NULL,
+  `kod` varchar(2) NOT NULL,
+  `butiran` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cm_statusdok`
+--
+
+INSERT INTO `cm_statusdok` (`id`, `kod`, `butiran`) VALUES
+(1, '00', 'PERMOHONAN BARU'),
+(2, '01', 'BERJAYA DISOKONG'),
+(3, '02', 'DALAM PROSES'),
+(4, '03', 'SELESAI'),
+(5, '04', 'PERBINCANGAN'),
+(6, '05', 'SEMAKAN PEMOHON');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ut_menu`
 --
 
@@ -173,7 +199,8 @@ INSERT INTO `ut_menu` (`id`, `nama_menu`, `parent`, `urutan`, `menu_url`, `menu_
 (1, 'Aduan', 0, 99, '/home', 0),
 (2, 'Utiliti', 0, 99, '/utilities', 0),
 (3, 'Menu', 2, 99, '/utilities/menu', 1),
-(4, 'Permohonan', 1, 99, '/home/index', 1);
+(4, 'Permohonan', 1, 99, '/home/index', 1),
+(5, 'Senarai Aduan', 1, 99, '/home/senaraiaduan', 1);
 
 --
 -- Indexes for dumped tables
@@ -202,6 +229,12 @@ ALTER TABLE `cm_modul`
 -- Indexes for table `cm_sistem`
 --
 ALTER TABLE `cm_sistem`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cm_statusdok`
+--
+ALTER TABLE `cm_statusdok`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -239,10 +272,16 @@ ALTER TABLE `cm_sistem`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `cm_statusdok`
+--
+ALTER TABLE `cm_statusdok`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `ut_menu`
 --
 ALTER TABLE `ut_menu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
