@@ -18,7 +18,6 @@
 				<!-- Main content -->
 				<section class="content">
 				<!-- Default box -->
-				<?= $validation->listErrors() ?>
 				<?=$alert?>
 				<div class="box box-primary">
 					<div class="box-header with-border">

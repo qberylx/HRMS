@@ -40,7 +40,7 @@ class Home extends BaseController
             'headermenu' => view('header_menu'),
             'senaraisistem' => $this->cm_sistem->senaraisemua()
         ];
-        return view('cuti/form', $data);
+        return view('form', $data);
     }
 
     public function senaraiaduan(){
