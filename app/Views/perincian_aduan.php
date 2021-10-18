@@ -36,7 +36,7 @@
                             <div class="col-md-6">
                                 <strong><i class="fa fa-asterisk margin-r-5"></i> No Staf</strong>
                                 <p class="text-muted">
-                                    B.S. in Computer Science from the University of Tennessee at Knoxville
+                                    testing
                                 </p>
                             <hr>
                             </div>

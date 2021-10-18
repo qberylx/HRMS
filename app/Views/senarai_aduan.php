@@ -45,7 +45,7 @@
                                         <td><?=substr($val->namamodul,0,50)?></td>
                                         <td><?=$val->butiranstatusdok?></td>
                                         <td class="text-center">
-                                            <a href="<?=site_url("/home/complaint/".$val->cm01_id)?>" type="button" class="btn btn-info">
+                                            <a href="<?=site_url("/home/complaint?id=".$val->id_encode)?>" type="button" class="btn btn-info">
                                                 <i class="fa fa-pencil-square-o"></i>
                                             </a>
                                         </td>

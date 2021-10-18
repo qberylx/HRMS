@@ -7,7 +7,6 @@ use App\Models\ut_menu;
 use App\Models\cm01_mohon;
 use App\Models\cm02_lampiran;
 use App\Models\cm_statusdok;
-helper('array');
 helper('form');
 
 
@@ -15,7 +14,7 @@ class Home extends BaseController
 {
     function __construct()
     {
-
+        $this->encrypter = \Config\Services::encrypter(); // start the encryption service
         $this->session = \Config\Services::session();
         $this->session->start();
 		$this->cm_sistem = new cm_sistem;
@@ -24,8 +23,6 @@ class Home extends BaseController
 		$this->cm01_mohon = new cm01_mohon;
 		$this->cm02_lampiran = new cm02_lampiran;
 		$this->cm_statusdok = new cm_statusdok;
-
-
     }
 
     public function index()
@@ -43,10 +40,15 @@ class Home extends BaseController
             'headermenu' => view('header_menu'),
             'senaraisistem' => $this->cm_sistem->senaraisemua()
         ];
-        return view('form', $data);
+        return view('cuti/form', $data);
     }
 
     public function senaraiaduan(){
+        $complaints = $this->cm01_mohon->selectAll();
+        foreach ($complaints as $val) {
+            $val->id_encode = bin2hex($this->encrypter->encrypt($val->cm01_id));
+    };
+
         $data = [
             'alert' => $this->session->getFlashdata('message'),
             'head' => view('head'),
@@ -58,12 +60,13 @@ class Home extends BaseController
                 'uripath' => $this->request->getPath()
             )),
             'headermenu' => view('header_menu'),
-            'senarai_aduan' => $this->cm01_mohon->selectAll()
+            'senarai_aduan' => $complaints
         ];
         return view('senarai_aduan', $data);
     }
 
-    public function complaint($id){
+    public function complaint(){
+        $decode_id = $this->encrypter->decrypt(hex2bin($this->request->getGet('id')));
         $data = [
             'alert' => $this->session->getFlashdata('message'),
             'head' => view('head'),
@@ -75,8 +78,8 @@ class Home extends BaseController
                 'uripath' => "/home/senaraiaduan"
             )),
             'headermenu' => view('header_menu'),
-            'aduan' => $this->cm01_mohon->selWhereID($id),
-            'lampiran' => $this->cm02_lampiran->SelWheremohonID($id),
+            'aduan' => $this->cm01_mohon->selWhereID($decode_id),
+            'lampiran' => $this->cm02_lampiran->SelWheremohonID($decode_id),
             'status_tindakan' => $this->cm_statusdok->SelWhereKodIn()
         ];
         return view('perincian_aduan', $data);

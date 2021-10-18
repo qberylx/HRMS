@@ -2,16 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Models\cm01_mohon;
-use App\Models\cm02_lampiran;
-use App\Models\ut_menu;
+use App\Models;
+//use App\Models\cm02_lampiran;
+//use App\Models\ut_menu;
 
 class Submit extends BaseController
 {
     public function __construct(){
-		$this->cm01_mohon = new cm01_mohon;
-		$this->cm02_lampiran = new cm02_lampiran;
-		$this->ut_menu = new ut_menu;
+		$this->cm01_mohon = new Models\cm01_mohon;
+		$this->cm02_lampiran = new Models\cm02_lampiran;
+		$this->ut_menu = new Models\ut_menu;
         $this->session = \Config\Services::session();
         $this->session->start();
     }
