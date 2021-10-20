@@ -14,7 +14,7 @@
     ?>
     <?=form_open("login/authentication")?>
       <div class="form-group has-feedback">
-        <input type="userid" class="form-control" placeholder="User ID">
+        <input type="text" name="userid" class="form-control" placeholder="User ID">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

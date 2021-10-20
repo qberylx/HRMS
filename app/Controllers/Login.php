@@ -4,6 +4,7 @@ namespace App\Controllers;
 helper('form');
 use App\Libraries\Password; // Import library
 use App\Libraries\Email;
+use App\Models;
 
 class Login extends BaseController
 {
@@ -12,6 +13,7 @@ class Login extends BaseController
         $this->session = \Config\Services::session();
         $this->encode = new Password();
         $this->email = new Email();
+        $this->login_session = new Models\login_session;
     }
 
     public function index()
@@ -27,6 +29,7 @@ class Login extends BaseController
 
     public function authentication()
     {
+        $this->login_session->InsertData($this->request->getPost("userid"),session_id());
         $token= $this->encode->encode($this->request->getPost('password'));
         return redirect()->to('home?token='.$token."&session=".session_id()); 
     }

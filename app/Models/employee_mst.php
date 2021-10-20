@@ -44,6 +44,18 @@ class employee_mst extends Model
         }
             return $this->db->error();
     }
+
+    public function checkLogin($userid){
+        $sql = "SELECT * FROM employee_mst WHERE id_user = '".$userid."'";
+
+        $this->db->query($sql);
+
+        if ($this->db->affectedRows() == '1')
+        {
+            return TRUE;
+        }
+            return FALSE;
+    }
     
     
 }
