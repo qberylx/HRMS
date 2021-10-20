@@ -24,7 +24,7 @@
 					<h3 class="box-title">Maklumat Permohonan</h3>
 					</div>
 					<div class="box-body">
-						<?=form_open_multipart("home/index")?>
+						<?=form_open_multipart("submit/application")?>
 							<div class="form-group">
 								<label>Nama Sistem</label>
 								<select class="form-control" name="namaSistem"  id="namaSistem">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2021 at 03:04 AM
+-- Generation Time: Oct 20, 2021 at 07:49 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -216,17 +216,34 @@ CREATE TABLE `employee_mst` (
   `name` varchar(250) DEFAULT NULL,
   `ic` varchar(20) DEFAULT NULL,
   `id_dept` bigint(20) NOT NULL,
-  `active_flag` tinyint(1) NOT NULL,
+  `active_flag` tinyint(1) NOT NULL DEFAULT 1,
   `pwd` varchar(250) NOT NULL,
-  `mod_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `mod_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `mod_by` varchar(20) NOT NULL,
-  `create_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `create_by` varchar(20) NOT NULL,
   `id_user` varchar(20) NOT NULL,
   `email` varchar(250) NOT NULL,
-  `image` blob NOT NULL,
-  `chg_pwd_flag` tinyint(1) NOT NULL DEFAULT 0
+  `image` blob DEFAULT NULL,
+  `chg_pwd_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `file_name` varchar(250) DEFAULT NULL,
+  `file_path` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_mst`
+--
+
+INSERT INTO `employee_mst` (`id_employee`, `name`, `ic`, `id_dept`, `active_flag`, `pwd`, `mod_date`, `mod_by`, `create_date`, `create_by`, `id_user`, `email`, `image`, `chg_pwd_flag`, `file_name`, `file_path`) VALUES
+(1, 'Syafiq', '999999999999', 2, 1, '$2y$11$1dDAyJp95ch1YpcmiSs0PO7kdpaGc3YzEPF6Diec0A2HrkYgxJRHS', '2021-10-20 05:05:31', '', '2021-10-20 05:05:31', '', 'admin1', 'tk.sama87@gmail.com', NULL, 0, NULL, NULL),
+(2, 'Azfar', '999999999999', 2, 1, '$2y$11$5gfOyQQ0rn.XpjcA.Z7MWegOUgA4/8SlDKUAW2tEXbTP7wTThtuLC', '2021-10-20 05:23:21', '', '2021-10-20 05:23:21', '', 'admin2', 'tk.sama87@gmail.com', NULL, 0, '1634707401_4907e770738c4013457f.jpg', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(3, 'test', '999999999999', 2, 1, '$2y$11$CCHiZsWDCxofGXp.iGQGmusua5h.H8SDdKevXpFTKTVlVB68qrwW2', '2021-10-20 05:27:43', '', '2021-10-20 05:27:43', '', 'admin3', 'tk.sama87@gmail.com', NULL, 0, '1634707662_e306575c2df89a86ff41.png', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(4, 'test', '999999999999', 2, 1, '$2y$11$x6efb03cNuTqZ/r8uohJLuZ3rcwUptdM5lsnwhJidXZd9kHtnI96y', '2021-10-20 05:28:45', '', '2021-10-20 05:28:45', '', 'admin3', 'tk.sama87@gmail.com', NULL, 0, '1634707725_cb508ad64df95c1bcd93.png', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(5, 'test', '999999999999', 2, 1, '$2y$11$42A6saiPpNjw4P7mliV.5u5O.UWR/zPtpEr4b5sgI6m8NWTqW2nJa', '2021-10-20 05:32:54', '', '2021-10-20 05:32:54', '', 'admin3', 'tk.sama87@gmail.com', NULL, 0, '1634707973_ba452f7112f01e603d3f.png', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(6, 'test', '999999999999', 2, 1, '$2y$11$94ULHwO25vt6f1UTyaFkHukPSRTXc5e.F32Vv3wl2oEClvLur5evO', '2021-10-20 05:34:38', '', '2021-10-20 05:34:38', '', 'admin3', 'tk.sama87@gmail.com', NULL, 0, '1634708078_2d0a5a0fd6a3540b9bb2.png', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(7, 'test', '999999999999', 2, 1, '$2y$11$YAVCj9WSplXolPKJ7wZvY..idfdn2mVNp5bYx9TTniDoJY.obMS0K', '2021-10-20 05:38:31', '', '2021-10-20 05:38:31', '', 'admin3', 'tk.sama87@gmail.com', NULL, 0, '1634708311_6bfff228fc97afb62036.png', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(8, 'test', '999999999999', 2, 1, '$2y$11$kn4pi/lciMzW2I8VqtilC.hsf5S5DP2T/wKlmUUXQOyiBW4EEI8ea', '2021-10-20 05:45:41', '', '2021-10-20 05:45:41', '', 'admin3', 'tk.sama87@gmail.com', NULL, 0, '1634708741_d9d4a95c2f4f473679db.png', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(9, 'test3', '999999999999', 2, 1, '$2y$11$JU3OC2O1f7gNDOuvpSAcx.QtIJh9qVll6btrU8rvHnw/3eog2FAkm', '2021-10-20 05:47:48', '', '2021-10-20 05:47:48', '', 'admin4', 'tk.sama87@gmail.com', NULL, 0, '1634708868_287ac53bcb84940660d2.jpg', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar');
 
 -- --------------------------------------------------------
 
@@ -252,7 +269,9 @@ INSERT INTO `ut_menu` (`id`, `nama_menu`, `parent`, `urutan`, `menu_url`, `menu_
 (2, 'Utiliti', 0, 99, '/utilities', 0),
 (3, 'Menu', 2, 99, '/utilities/menu', 1),
 (4, 'Permohonan', 1, 99, '/home/index', 1),
-(5, 'Senarai Aduan', 1, 99, '/home/senaraiaduan', 1);
+(5, 'Senarai Aduan', 1, 99, '/home/senaraiaduan', 1),
+(6, 'Peribadi', 0, 99, '/peribadi', 0),
+(7, 'Daftar Staf', 6, 99, '/peribadi/daftarstaf', 1);
 
 --
 -- Indexes for dumped tables
@@ -351,13 +370,13 @@ ALTER TABLE `department_mst`
 -- AUTO_INCREMENT for table `employee_mst`
 --
 ALTER TABLE `employee_mst`
-  MODIFY `id_employee` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_employee` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ut_menu`
 --
 ALTER TABLE `ut_menu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
