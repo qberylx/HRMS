@@ -183,27 +183,27 @@ INSERT INTO `cm_statusdok` (`id`, `kod`, `butiran`) VALUES
 --
 
 CREATE TABLE `department_mst` (
-  `ID` bigint(20) NOT NULL,
-  `Code` varchar(2) NOT NULL,
-  `Name_BM` varchar(250) NOT NULL,
-  `Name_BI` varchar(250) NOT NULL
+  `id` bigint(20) NOT NULL,
+  `code` varchar(2) NOT NULL,
+  `name_bm` varchar(250) NOT NULL,
+  `name_bi` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `department_mst`
 --
 
-INSERT INTO `department_mst` (`ID`, `Code`, `Name_BM`, `Name_BI`) VALUES
+INSERT INTO `department_mst` (`id`, `code`, `name_bm`, `name_bi`) VALUES
 (1, '01', 'Facility Management', 'Facility Management'),
 (2, '02', 'IT', 'IT'),
-(5, '03', 'Admin', 'Admin'),
-(6, '04', 'UHPSB', 'UHPSB'),
-(7, '05', 'Management', 'Management'),
-(8, '06', 'Solar Energy', 'Solar Energy'),
-(9, '07', 'HR/Finance', 'HR/Finance'),
-(10, '08', 'Agriculture', 'Agriculture'),
-(11, '09', 'F&B', 'F&B'),
-(12, '10', 'TeaLive', 'TeaLive');
+(3, '03', 'Admin', 'Admin'),
+(4, '04', 'UHPSB', 'UHPSB'),
+(5, '05', 'Management', 'Management'),
+(6, '06', 'Solar Energy', 'Solar Energy'),
+(7, '07', 'HR/Finance', 'HR/Finance'),
+(8, '08', 'Agriculture', 'Agriculture'),
+(9, '09', 'F&B', 'F&B'),
+(10, '10', 'TeaLive', 'TeaLive');
 
 -- --------------------------------------------------------
 
@@ -212,20 +212,20 @@ INSERT INTO `department_mst` (`ID`, `Code`, `Name_BM`, `Name_BI`) VALUES
 --
 
 CREATE TABLE `employee_mst` (
-  `ID_Employee` bigint(20) NOT NULL,
-  `Name` varchar(250) DEFAULT NULL,
-  `IC` varchar(20) DEFAULT NULL,
-  `ID_Dept` bigint(20) NOT NULL,
-  `Active_Flag` tinyint(1) NOT NULL,
-  `Pwd` varchar(250) NOT NULL,
-  `Mod_Date` datetime NOT NULL DEFAULT current_timestamp(),
-  `Mod_By` varchar(20) NOT NULL,
-  `Create_Date` datetime NOT NULL DEFAULT current_timestamp(),
-  `Create_By` varchar(20) NOT NULL,
-  `ID_User` varchar(20) NOT NULL,
-  `Email` varchar(250) NOT NULL,
-  `Image` blob NOT NULL,
-  `Chg_Pwd_Flag` tinyint(1) NOT NULL DEFAULT 0
+  `id_employee` bigint(20) NOT NULL,
+  `name` varchar(250) DEFAULT NULL,
+  `ic` varchar(20) DEFAULT NULL,
+  `id_dept` bigint(20) NOT NULL,
+  `active_flag` tinyint(1) NOT NULL,
+  `pwd` varchar(250) NOT NULL,
+  `mod_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `mod_by` varchar(20) NOT NULL,
+  `create_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `create_by` varchar(20) NOT NULL,
+  `id_user` varchar(20) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `image` blob NOT NULL,
+  `chg_pwd_flag` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -293,13 +293,13 @@ ALTER TABLE `cm_statusdok`
 -- Indexes for table `department_mst`
 --
 ALTER TABLE `department_mst`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employee_mst`
 --
 ALTER TABLE `employee_mst`
-  ADD PRIMARY KEY (`ID_Employee`);
+  ADD PRIMARY KEY (`id_employee`);
 
 --
 -- Indexes for table `ut_menu`
@@ -345,13 +345,13 @@ ALTER TABLE `cm_statusdok`
 -- AUTO_INCREMENT for table `department_mst`
 --
 ALTER TABLE `department_mst`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `employee_mst`
 --
 ALTER TABLE `employee_mst`
-  MODIFY `ID_Employee` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_employee` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ut_menu`
