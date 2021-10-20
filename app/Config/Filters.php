@@ -19,6 +19,7 @@ class Filters extends BaseConfig
         'csrf'     => CSRF::class,
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
+        'CheckSession' => \App\Filters\CheckSession::class,
     ];
 
     /**
@@ -29,7 +30,7 @@ class Filters extends BaseConfig
      */
     public $globals = [
         'before' => [
-            // 'honeypot',
+            // 'CheckSession',
             // 'csrf',
         ],
         'after' => [
@@ -58,5 +59,7 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $filters = [];
+    public $filters = [
+        'CheckSession' => ['before' => ['Home/*']],
+    ];
 }

@@ -34,11 +34,14 @@ class Peribadi extends Controller
             'foot' => view('foot'),
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
                 'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
                 'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
                 'uripath' => $this->request->getPath()
             )),
-            'headermenu' => view('header_menu'),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
             'senaraidept' => $this->department_mst->SenaraiSemua(),
             'userid' => $this->session->get('userid'),
             'senaraistaf' => $this->employee_mst->SenaraiSemua()

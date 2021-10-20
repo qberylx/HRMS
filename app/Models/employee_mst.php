@@ -45,16 +45,42 @@ class employee_mst extends Model
             return $this->db->error();
     }
 
-    public function checkLogin($userid){
-        $sql = "SELECT * FROM employee_mst WHERE id_user = '".$userid."'";
+    public function SelectWhereUserID($userid){
+        $data = [];
+        $sql = "SELECT * FROM employee_mst A ".
+        "LEFT JOIN department_mst B ON B.ID = A.id_dept ".
+        "WHERE id_user = '".$userid."' and active_flag = 1";
+
+        $result = $this->db->query($sql);
+
+        if ($result->getNumRows() > 0) {
+            $data = $result->getRow();
+
+            return $data;
+        }
+        return false;
+    }
+
+    public function updatePassword($user_id,$password){
+        $sql = "UPDATE employee_mst set pwd = '".$password."', chg_pwd_flag = 1 where id_user = '".$user_id."'";
 
         $this->db->query($sql);
-
         if ($this->db->affectedRows() == '1')
         {
-            return TRUE;
+            return true;
         }
-            return FALSE;
+            return false;
+    }
+
+    public function checkForgotPass($userid,$email){
+        $sql = "SELECT * FROM employee_mst WHERE id_user = '".$userid."' and email = '".$email."' and active_flag = 1";
+
+        $result = $this->db->query($sql);
+
+        if ($result->getNumRows() > 0) {
+            return true;
+        }
+        return false;
     }
     
     

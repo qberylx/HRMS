@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\cm_sistem;
-use App\Models\cm_modul;
-use App\Models\ut_menu;
-use App\Models\cm01_mohon;
-use App\Models\cm02_lampiran;
-use App\Models\cm_statusdok;
+use App\Models;
+use App\Libraries;
 helper('form');
 
 
@@ -17,12 +13,13 @@ class Home extends BaseController
         $this->encrypter = \Config\Services::encrypter(); // start the encryption service
         $this->session = \Config\Services::session();
         $this->session->start();
-		$this->cm_sistem = new cm_sistem;
-		$this->cm_modul = new cm_modul;
-		$this->ut_menu = new ut_menu;
-		$this->cm01_mohon = new cm01_mohon;
-		$this->cm02_lampiran = new cm02_lampiran;
-		$this->cm_statusdok = new cm_statusdok;
+		$this->cm_sistem = new Models\cm_sistem;
+		$this->cm_modul = new Models\cm_modul;
+		$this->ut_menu = new Models\ut_menu;
+		$this->cm01_mohon = new Models\cm01_mohon;
+		$this->cm02_lampiran = new Models\cm02_lampiran;
+		$this->cm_statusdok = new Models\cm_statusdok;
+		$this->employee_mst = new Models\employee_mst;
     }
 
     public function index()
@@ -33,11 +30,14 @@ class Home extends BaseController
             'foot' => view('foot'),
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
                 'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
                 'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
                 'uripath' => $this->request->getPath()
             )),
-            'headermenu' => view('header_menu'),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
             'senaraisistem' => $this->cm_sistem->senaraisemua()
         ];
         return view('form', $data);
@@ -55,11 +55,14 @@ class Home extends BaseController
             'foot' => view('foot'),
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
                 'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
                 'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
                 'uripath' => $this->request->getPath()
             )),
-            'headermenu' => view('header_menu'),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
             'senarai_aduan' => $complaints
         ];
         return view('senarai_aduan', $data);
@@ -73,11 +76,14 @@ class Home extends BaseController
             'foot' => view('foot'),
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
                 'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
                 'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
                 'uripath' => "/home/senaraiaduan"
             )),
-            'headermenu' => view('header_menu'),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
             'aduan' => $this->cm01_mohon->selWhereID($decode_id),
             'lampiran' => $this->cm02_lampiran->SelWheremohonID($decode_id),
             'status_tindakan' => $this->cm_statusdok->SelWhereKodIn()

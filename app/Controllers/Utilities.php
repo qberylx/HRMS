@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\cm_sistem;
-use App\Models\cm_modul;
-use App\Models\ut_menu;
+use App\Models;
 helper('array');
 helper('form');
 
@@ -15,9 +13,10 @@ class Utilities extends BaseController
 
         $this->session = \Config\Services::session();
         $this->session->start();
-		$this->cm_sistem = new cm_sistem;
-		$this->cm_modul = new cm_modul;
-		$this->ut_menu = new ut_menu;
+		$this->cm_sistem = new Models\cm_sistem;
+		$this->cm_modul = new Models\cm_modul;
+		$this->ut_menu = new Models\ut_menu;
+		$this->employee_mst = new Models\employee_mst;
 
     }
 
@@ -29,11 +28,14 @@ class Utilities extends BaseController
             'foot' => view('foot'),
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
                 'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
                 'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
                 'uripath' => $this->request->getPath()
             )),
-            'headermenu' => view('header_menu'),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
             'senaraimenu' => $this->ut_menu->SenaraiSemua(),
             'senarailvl0' => $this->ut_menu->SenaraiLvl0()
         ];

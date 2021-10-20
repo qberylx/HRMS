@@ -14,6 +14,10 @@
         ?>
         <?=form_open("login/forgotpassword")?>
             <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="userid" placeholder="Username" value="<?=$userid?>">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
                 <input type="email" class="form-control" name="email" placeholder="Type your email" value="<?=$email?>">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
@@ -21,6 +25,14 @@
                 <!-- /.col -->
                 <div class="col-xs-12">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Reset Password</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <hr>
+                <div class="col-xs-12 text-center">
+                  <a href="<?=site_url("login")?>"><span class="fa fa-angle-left"></span> Back</a>
                 </div>
                 <!-- /.col -->
             </div>

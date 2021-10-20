@@ -18,6 +18,27 @@ class login_session extends Model
             return FALSE;
     }
 
+    public function delSessionID($userid){
+        $sql = "DELETE FROM login_session WHERE user_id = '".$userid."'";
+        $this->db->query($sql);
+        if ($this->db->affectedRows() > 0)
+        {
+            return TRUE;
+        }
+            return FALSE;
+    }
+
+    public function SelectSessionID($userid){
+        $sql="SELECT session_id FROM login_session where user_id = '".$userid."'";
+        $result = $this->db->query($sql);
+        if ($result->getNumRows() > 0) {
+            $data = $result->getRow();
+
+            return $data;
+        }
+        return false;
+    }
+
 
 }
 
