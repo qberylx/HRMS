@@ -10,9 +10,6 @@
 <script src="<?=base_url("vendor/almasaeed2010/adminlte/")?>/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?=base_url("vendor/almasaeed2010/adminlte/")?>/dist/js/demo.js"></script>
-<!-- js code for timeout -->
-<script>var base_url = '<?=site_url() ?>';</script>
-<script src="<?=base_url("assets/js/")?>/timer.js"></script>
 <!-- main javascript/jquery code -->
 <script src="<?=base_url("assets/js/")?>/main.js"></script>
 <script>

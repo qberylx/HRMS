@@ -15,7 +15,8 @@ class Home extends BaseController
         $this->session->start();
 		$this->cm_sistem = new Models\cm_sistem;
 		$this->cm_modul = new Models\cm_modul;
-		$this->ut_menu = new Models\ut_menu;
+		$this->menu = new Models\menu;
+		$this->menu_level1 = new Models\menu_level1;
 		$this->cm01_mohon = new Models\cm01_mohon;
 		$this->cm02_lampiran = new Models\cm02_lampiran;
 		$this->cm_statusdok = new Models\cm_statusdok;
@@ -24,6 +25,11 @@ class Home extends BaseController
 
     public function index()
     {
+        $menu = $this->menu->SenaraiSemua();
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+        };
+
         $data = [
             'alert' => $this->session->getFlashdata('message'),
             'head' => view('head'),
@@ -31,8 +37,7 @@ class Home extends BaseController
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
                 'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
-                'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
+                'menus' => $menu,
                 'uripath' => $this->request->getPath()
             )),
             'headermenu' => view('header_menu', array(
@@ -44,10 +49,15 @@ class Home extends BaseController
     }
 
     public function senaraiaduan(){
+        $menu = $this->menu->SenaraiSemua();
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+        };
+
         $complaints = $this->cm01_mohon->selectAll();
         foreach ($complaints as $val) {
             $val->id_encode = bin2hex($this->encrypter->encrypt($val->cm01_id));
-    };
+        };
 
         $data = [
             'alert' => $this->session->getFlashdata('message'),
@@ -56,8 +66,7 @@ class Home extends BaseController
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
                 'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
-                'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
+                'menus' => $menu,
                 'uripath' => $this->request->getPath()
             )),
             'headermenu' => view('header_menu', array(
@@ -69,6 +78,11 @@ class Home extends BaseController
     }
 
     public function complaint(){
+        $menu = $this->menu->SenaraiSemua();
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+        };
+
         $decode_id = $this->encrypter->decrypt(hex2bin($this->request->getGet('id')));
         $data = [
             'alert' => $this->session->getFlashdata('message'),
@@ -77,8 +91,7 @@ class Home extends BaseController
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
                 'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
-                'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
+                'menus' => $menu,
                 'uripath' => "/home/senaraiaduan"
             )),
             'headermenu' => view('header_menu', array(

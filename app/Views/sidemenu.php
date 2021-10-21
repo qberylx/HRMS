@@ -27,27 +27,27 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <?php
-          foreach ($senaraimenulvl0 as $menulvl0) {
-            if (str_starts_with($uripath,$menulvl0->menu_url) == true) {
+          foreach ($menus as $menu) {
+            if (str_starts_with($uripath,$menu->menu_url) == true) {
               echo '<li class="treeview active menu-open">';
             }else{
               echo '<li class="treeview">';
             }
         ?>
             <a href="#">
-              <i class="fa fa-th"></i> <span><?=$menulvl0->nama_menu?></span>
+              <i class="fa fa-th"></i> <span><?=$menu->nama_menu?></span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
             <?php
-              foreach ($senaraimenulvl1 as $menulvl1) {
-                if ($menulvl1->parent == $menulvl0->id) {
+              foreach ($menu->menulvl1 as $menulvl1) {
+                if ($menulvl1->parent == $menu->id) {
             ?>
-                <li <?=$uripath == $menulvl1->menu_url ? "class='active'" : ''  ?>>
+                <li <?=1 == 1 ? "class='active'" : ''  ?>>
                   <a href="<?=site_url($menulvl1->menu_url)?>">
-                    <i class="fa fa-gg"></i > <span><?=$menulvl1->nama_menu?></span>
+                    <i class="fa fa-gg"></i > <span><?=$menulvl1->menu_name?></span>
                   </a>
                 </li>
             <?php

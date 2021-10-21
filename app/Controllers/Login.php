@@ -23,7 +23,7 @@ class Login extends BaseController
         $data = [
             'message' => $this->session->getFlashdata('message'),
             'head' => view('head'),
-            'foot' => view('foot')
+            'foot' => view('foot_login')
         ];
         return view('login', $data);
     }
@@ -107,7 +107,7 @@ class Login extends BaseController
         $data = [
             'message' => $message,
             'head' => view('head'),
-            'foot' => view('foot'),
+            'foot' => view('foot_login'),
             'pass1' => $pass1,
             'pass2' =>$pass2
         ];
@@ -175,7 +175,7 @@ class Login extends BaseController
         $data = [
             'message' => $message,
             'head' => view('head'),
-            'foot' => view('foot'),
+            'foot' => view('foot_login'),
             'email' => $email,
             'userid' => $userid
         ];
@@ -185,6 +185,18 @@ class Login extends BaseController
     public function logout(){
         if ($this->login_session->delSessionID($this->session->get("userid"))) {
             $this->session->destroy();
+            return redirect()->to('login'); 
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Error</h4>Something went wrong.</div>");
+            return redirect()->to('home'); 
+        }
+        
+    }
+
+    public function idle(){
+        if ($this->login_session->delSessionID($this->session->get("userid"))) {
+            $this->session->destroy();
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Idle</h4>You idle for too long.</div>");
             return redirect()->to('login'); 
         }else{
             $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Error</h4>Something went wrong.</div>");
