@@ -33,16 +33,27 @@ class employee_mst extends Model
     }
 
     public function mohon($data){
-        $sql = "INSERT INTO employee_mst(id_user,name,ic,id_dept,mod_by,create_by,email,pwd,file_name,file_path) VALUES(?,?,?,?,?,?,?,?,?,?)";
-        $value = [$data['txt_iduser'],$data['txt_nama'],$data['txt_ic'],$data['sel_dept'],$data['userid'],$data['userid'],$data['txt_emel'],$data['pass'],$data['namadokumen'],$data['lokasi']];
+        //check if id exist
+        $chksql = "SELECT * FROM employee_mst WHERE id_user = '".$data['txt_iduser']."'";
+        $chkresult = $this->db->query($chksql);
+        if($chkresult->getNumRows() > 0){
+            return false;
+        }else{
 
-        $this->db->query($sql,$value);
+            $sql = "INSERT INTO employee_mst(id_user,name,ic,id_dept,mod_by,create_by,email,pwd,file_name,file_path) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            $value = [$data['txt_iduser'],$data['txt_nama'],$data['txt_ic'],$data['sel_dept'],$data['userid'],$data['userid'],$data['txt_emel'],$data['pass'],$data['namadokumen'],$data['lokasi']];
 
-        if ($this->db->affectedRows() == '1')
-        {
-            return $this->db->insertID();
+            $this->db->query($sql,$value);
+
+            if ($this->db->affectedRows() == '1')
+            {
+                return $this->db->insertID();
+            }
+                return $this->db->error();
+            
         }
-            return $this->db->error();
+
+        
     }
 
     public function SelectWhereUserID($userid){

@@ -76,22 +76,25 @@ class Peribadi extends Controller
         //var_dump($result);
         if ($result >= 1) {
 			$this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Berjaya</h4>Pendaftaran Staf telah berjaya. Terima kasih.</div>");
+            //only sent email when data insert into database
+            $to = $values['txt_emel'];
+            $cc = '';
+            $subject = 'Pendaftaran Staf';
+            $body = "Salam Sejahtera.\n\n ".
+                    "Sila gunakan Username dan Password yang diberi untuk log masuk ke homepage.\n". 
+                    "Username : '".$values['txt_iduser']."'". 
+                    "Password : '".$temp_pass."'\n\n\n". 
+                    "Sekian, Terima Kasih.";
+
+            $this->email->sendMail($to,$cc,$subject,$body) ;
+            
 		} else {
 			$this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
 		}
 
         
         
-        $to = $values['txt_emel'];
-        $cc = '';
-        $subject = 'Pendaftaran Staf';
-        $body = "Salam Sejahtera.\n\n ".
-                "Sila gunakan Username dan Password yang diberi untuk log masuk ke homepage.\n". 
-                "Username : '".$values['txt_iduser']."'". 
-                "Password : '".$temp_pass."'\n\n\n". 
-                "Sekian, Terima Kasih.";
-
-        $this->email->sendMail($to,$cc,$subject,$body) ;
+        
        
         return redirect()->to('peribadi/daftarstaf'); 
     }
