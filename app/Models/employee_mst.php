@@ -19,14 +19,32 @@ class employee_mst extends Model
         return $data;
     }
 
-    public function SelectWhereIDUser($val){
-        $sql = "SELECT * FROM employee_mst where ID_User = '".$val."' ORDER BY kod";
+    /*public function SelectWhereIDUser($val){
+        $sql = "SELECT * FROM employee_mst where ID_User = '".$val."' ORDER BY Code";
 
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
             foreach ($result->getResult() as $row) {
                 $data[] = $row;
             }
+            return $data;
+        }
+        return false;
+    }
+    */
+    
+
+    public function SelectWhereUserID($userid){
+        $data = [];
+        $sql = "SELECT * FROM employee_mst A ".
+        "LEFT JOIN department_mst B ON B.ID = A.id_dept ".
+        "WHERE id_user = '".$userid."' and active_flag = 1";
+
+        $result = $this->db->query($sql);
+
+        if ($result->getNumRows() > 0) {
+            $data = $result->getRow();
+
             return $data;
         }
         return false;
@@ -56,20 +74,19 @@ class employee_mst extends Model
         
     }
 
-    public function SelectWhereUserID($userid){
-        $data = [];
-        $sql = "SELECT * FROM employee_mst A ".
-        "LEFT JOIN department_mst B ON B.ID = A.id_dept ".
-        "WHERE id_user = '".$userid."' and active_flag = 1";
+    public function update_mohon($data){
+        
+        $sql = "UPDATE employee_mst set name = '".$data['txt_nama']."', ic = '".$data['txt_ic']."', id_dept = '".$data['sel_dept']."', mod_by = '".$data['userid']."', mod_date = now(), active_flag = '".$data['statusdok']."' where id_user = '".$user_id."'";
+        $value = [$data['txt_iduser'],$data['txt_nama'],$data['txt_ic'],$data['sel_dept'],$data['userid'],$data['userid'],$data['txt_emel'],$data['pass'],$data['namadokumen'],$data['lokasi']];
 
-        $result = $this->db->query($sql);
+        $this->db->query($sql,$value);
 
-        if ($result->getNumRows() > 0) {
-            $data = $result->getRow();
-
-            return $data;
+        if ($this->db->affectedRows() == '1')
+        {
+            return true;
         }
-        return false;
+            return false; //return $this->db->error();
+        
     }
 
     public function updatePassword($user_id,$password){
