@@ -7,21 +7,15 @@ use CodeIgniter\Model;
 class menu extends Model
 {
     public function addmenu($data){
-        var_dump($data);
-        $sql = "INSERT INTO menu(nama_menu,parent,urutan,menu_url,menu_level) VALUES(?,?,?,?,?)";
+        $sql = "INSERT INTO menu(nama_menu) VALUES(?)";
 
-        if ($data['menuParent'] == 0) {
-            $menulvl = 0;
-        }else{
-            $menulvl = 1;
-        }
-
-        $value = [$data['namamenu'],$data['menuParent'],'99',$data['menuURL'],$menulvl];
+        $value = [$data['namamenu']];
 
         $this->db->query($sql,$value);
 
         if ($this->db->affectedRows() == '1')
         {
+            $query = $this->db->getLastQuery();
             return TRUE;
         }
             return FALSE;
