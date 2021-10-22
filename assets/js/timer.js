@@ -41,7 +41,8 @@ function startIdleTimer() {
     document.querySelector(".timertext")
         .style.display = 'block';
 
-    if (currSeconds == 600) {
-        window.location.href = base_url+"/login/logout";
+    if (currSeconds == 1200) {
+        $('#modal-danger').modal('show')
+        //window.location.href = base_url+"/login/logout";
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2021 at 04:43 AM
+-- Generation Time: Oct 22, 2021 at 05:46 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -179,10 +179,91 @@ INSERT INTO `cm_statusdok` (`id`, `kod`, `butiran`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ut_menu`
+-- Table structure for table `department_mst`
 --
 
-CREATE TABLE `ut_menu` (
+CREATE TABLE `department_mst` (
+  `ID` bigint(20) NOT NULL,
+  `code` varchar(2) NOT NULL,
+  `name_bm` varchar(250) NOT NULL,
+  `name_bi` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `department_mst`
+--
+
+INSERT INTO `department_mst` (`ID`, `code`, `name_bm`, `name_bi`) VALUES
+(1, '01', 'Facility Management', 'Facility Management'),
+(2, '02', 'IT', 'IT'),
+(5, '03', 'Admin', 'Admin'),
+(6, '04', 'UHPSB', 'UHPSB'),
+(7, '05', 'Management', 'Management'),
+(8, '06', 'Solar Energy', 'Solar Energy'),
+(9, '07', 'HR/Finance', 'HR/Finance'),
+(10, '08', 'Agriculture', 'Agriculture'),
+(11, '09', 'F&B', 'F&B'),
+(12, '10', 'TeaLive', 'TeaLive');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employee_mst`
+--
+
+CREATE TABLE `employee_mst` (
+  `id_employee` bigint(20) NOT NULL,
+  `name` varchar(250) DEFAULT NULL,
+  `ic` varchar(20) DEFAULT NULL,
+  `id_dept` bigint(20) NOT NULL,
+  `active_flag` tinyint(1) NOT NULL DEFAULT 1,
+  `pwd` varchar(250) NOT NULL,
+  `mod_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `mod_by` varchar(20) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `create_by` varchar(20) NOT NULL,
+  `id_user` varchar(20) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `image` blob DEFAULT NULL,
+  `chg_pwd_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `file_name` varchar(250) DEFAULT NULL,
+  `file_path` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `employee_mst`
+--
+
+INSERT INTO `employee_mst` (`id_employee`, `name`, `ic`, `id_dept`, `active_flag`, `pwd`, `mod_date`, `mod_by`, `create_date`, `create_by`, `id_user`, `email`, `image`, `chg_pwd_flag`, `file_name`, `file_path`) VALUES
+(10, 'Syafiq bin Jasmani', '871207145391', 2, 1, '$2y$11$u53zjWBWb49RRYrpu2q9Ye1kJ6kOLSG76gKi12ZZH0wnOOamkguf.', '2021-10-20 06:17:08', '', '2021-10-20 06:17:08', '', 'admin1', 'tk.sama87@gmail.com', NULL, 1, '1634710628_da464ded8228a8499661.png', 'C:\\xampp\\htdocs\\spa\\public/avatar');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_session`
+--
+
+CREATE TABLE `login_session` (
+  `id` bigint(20) NOT NULL,
+  `user_id` varchar(10) NOT NULL,
+  `session_id` varchar(200) NOT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `login_session`
+--
+
+INSERT INTO `login_session` (`id`, `user_id`, `session_id`, `date_created`) VALUES
+(50, 'admin1', 'ke55qhurvmko7cmoo9jkm4lqs9lo8cf8', '2021-10-22 01:37:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
   `id` bigint(20) NOT NULL,
   `nama_menu` varchar(50) NOT NULL,
   `parent` bigint(20) NOT NULL,
@@ -192,15 +273,51 @@ CREATE TABLE `ut_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `ut_menu`
+-- Dumping data for table `menu`
 --
 
-INSERT INTO `ut_menu` (`id`, `nama_menu`, `parent`, `urutan`, `menu_url`, `menu_level`) VALUES
-(1, 'Aduan', 0, 99, '/home', 0),
-(2, 'Utiliti', 0, 99, '/utilities', 0),
-(3, 'Menu', 2, 99, '/utilities/menu', 1),
-(4, 'Permohonan', 1, 99, '/home/index', 1),
-(5, 'Senarai Aduan', 1, 99, '/home/senaraiaduan', 1);
+INSERT INTO `menu` (`id`, `nama_menu`, `parent`, `urutan`, `menu_url`, `menu_level`) VALUES
+(1, 'Aduan', 0, 1, '/home', 0),
+(2, 'Utiliti', 0, 2, '/utilities', 0),
+(6, 'Peribadi', 0, 3, '/peribadi', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_level1`
+--
+
+CREATE TABLE `menu_level1` (
+  `id` bigint(20) NOT NULL,
+  `menu_order` int(11) NOT NULL,
+  `code` varchar(2) NOT NULL,
+  `menu_name` varchar(100) NOT NULL,
+  `menu_url` varchar(100) NOT NULL,
+  `parent` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `menu_level1`
+--
+
+INSERT INTO `menu_level1` (`id`, `menu_order`, `code`, `menu_name`, `menu_url`, `parent`) VALUES
+(1, 1, '01', 'Menu', '/utilities/menu', 2),
+(2, 1, '01', 'Registration', '/peribadi/daftarstaf', 6),
+(3, 1, '', 'Registration', '/home/index', 1),
+(4, 2, '', 'List', '/home/senaraiaduan', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_level2`
+--
+
+CREATE TABLE `menu_level2` (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(2) NOT NULL,
+  `menu_name` varchar(100) NOT NULL,
+  `parent` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -238,9 +355,39 @@ ALTER TABLE `cm_statusdok`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ut_menu`
+-- Indexes for table `department_mst`
 --
-ALTER TABLE `ut_menu`
+ALTER TABLE `department_mst`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `employee_mst`
+--
+ALTER TABLE `employee_mst`
+  ADD PRIMARY KEY (`id_employee`);
+
+--
+-- Indexes for table `login_session`
+--
+ALTER TABLE `login_session`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu_level1`
+--
+ALTER TABLE `menu_level1`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `menu_level2`
+--
+ALTER TABLE `menu_level2`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -278,10 +425,40 @@ ALTER TABLE `cm_statusdok`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `ut_menu`
+-- AUTO_INCREMENT for table `department_mst`
 --
-ALTER TABLE `ut_menu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `department_mst`
+  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `employee_mst`
+--
+ALTER TABLE `employee_mst`
+  MODIFY `id_employee` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `login_session`
+--
+ALTER TABLE `login_session`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `menu_level1`
+--
+ALTER TABLE `menu_level1`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `menu_level2`
+--
+ALTER TABLE `menu_level2`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

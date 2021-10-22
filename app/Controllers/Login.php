@@ -37,7 +37,8 @@ class Login extends BaseController
             if (password_verify($pass, $result->pwd)) {
                 $param = [
                     'userid' => $result->id_user,
-                    'id' => $result->id_employee
+                    'id' => $result->id_employee,
+                    'session_hash' => $this->encode->encode(session_id())
                 ];
                 $this->session->set($param);
                 $this->login_session->InsertData($this->request->getPost("userid"),session_id());
