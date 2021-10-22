@@ -54,6 +54,63 @@ class Peribadi extends Controller
         return view('daftarstaf', $data);
     }
 
+    public function senaraistaf(){
+        $menu = $this->menu->SenaraiSemua();
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+        };
+
+        $staff = $this->employee_mst->SenaraiSemua();
+        foreach ($staff as $val) {
+            $val->id_encode = bin2hex($this->encrypter->encrypt($val->id_user));
+        };
+
+        $data = [
+            'alert' => $this->session->getFlashdata('message'),
+            'head' => view('head'),
+            'foot' => view('foot'),
+            'control_sidebar' => view('control_sidebar'),
+            'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
+                'menus' => $menu,
+                'uripath' => $this->request->getPath()
+            )),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
+            'senarai_staf' => $staff
+        ];
+        return view('senarai_staf', $data);
+    }
+
+    public function maklumat_staf(){
+        $menu = $this->menu->SenaraiSemua();
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+        };
+
+        $decode_id = $this->encrypter->decrypt(hex2bin($this->request->getGet('id')));
+        $data = [
+            'alert' => $this->session->getFlashdata('message'),
+            'head' => view('head'),
+            'foot' => view('foot'),
+            'control_sidebar' => view('control_sidebar'),
+            'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
+                'menus' => $menu,
+                'uripath' => "/peribadi/senaraistaf"
+            )),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
+            )),
+            'senaraidept' => $this->department_mst->SenaraiSemua(),
+            'staf' => $this->employee_mst->SelectWhereUserID($decode_id),
+            'lampiran' =>'',// $this->cm02_lampiran->SelWheremohonID($decode_id),
+            'status_tindakan' =>''// $this->cm_statusdok->SelWhereKodIn()
+        ];
+        return view('maklumat_staf', $data);
+    }
+
     public function application(){
         $values = $this->request->getPost();
 
@@ -76,7 +133,7 @@ class Peribadi extends Controller
         
         $temp_pass = $this->encode->generateRandomString(6);
         $values['pass'] = $this->encode->encode($temp_pass);
-        $values['userid'] = '';//$this->session->get('userid');
+        $values['userid'] = $this->session->get('userid');
         $result = $this->employee_mst->mohon($values);
         //var_dump($result);
         if ($result >= 1) {
@@ -98,11 +155,44 @@ class Peribadi extends Controller
 		}
 
         
-        
-        
-       
         return redirect()->to('peribadi/daftarstaf'); 
     }
+
+    public function update_application(){
+        $values = $this->request->getPost();
+
+        if ($lampiran = $this->request->getFileMultiple('lampiran')) {
+            foreach($lampiran as $item) {
+                if ($item->isValid() && !$item->hasMoved()) {
+                    $newName = $item->getRandomName();
+                    $item->move(ROOTPATH.'public/avatar', $newName);
+                    $values['namadokumen'] = $newName;
+                    $values['lokasi'] = ROOTPATH.'public/avatar';
+                    /*$dataLampiran = array(
+                        'mohonid' => $result,
+                        'namadokumen' => $newName,
+                        'lokasi' => '/public/avatar'
+                    );*/
+                    //$this->employee_mst->addLampiran($dataLampiran);
+                }
+            }
+        }
+        
+        $values['userid'] = $this->session->get('userid');
+        $result = $this->employee_mst->update_mohon($values);
+        //var_dump($result);
+        if ($result >= 1) {
+			$this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Berjaya</h4>Pendaftaran Staf telah berjaya. Terima kasih.</div>");
+               
+		} else {
+			$this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+		}
+
+        
+        return redirect()->to('peribadi/maklumat_staf'); 
+    }
+
+    
 
 
 }
