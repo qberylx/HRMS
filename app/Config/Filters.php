@@ -20,6 +20,7 @@ class Filters extends BaseConfig
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
         'CheckSession' => \App\Filters\CheckSession::class,
+        'SessionOnLogin' => \App\Filters\SessionOnLogin::class,
     ];
 
     /**
@@ -61,5 +62,6 @@ class Filters extends BaseConfig
      */
     public $filters = [
         'CheckSession' => ['before' => ['Home/*', 'Utilities/*', 'Peribadi/*']],
+        'SessionOnLogin' => ['before' => ['Login/index','Login/authentication','']],
     ];
 }

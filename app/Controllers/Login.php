@@ -19,6 +19,7 @@ class Login extends BaseController
 
     public function index()
     {
+        //$this->session->destroy();
         $message = '';
         $data = [
             'message' => $this->session->getFlashdata('message'),
@@ -30,22 +31,39 @@ class Login extends BaseController
 
     public function authentication()
     {   
+        //$this->session->destroy();
         $userid = $this->request->getPost("userid");
         $pass = $this->request->getPost("password");
 
+        
         if ($result = $this->employee_mst->SelectWhereUserID($userid)) {
             if (password_verify($pass, $result->pwd)) {
-                $param = [
-                    'userid' => $result->id_user,
-                    'id' => $result->id_employee,
-                    'session_hash' => $this->encode->encode(session_id())
-                ];
-                $this->session->set($param);
-                $this->login_session->InsertData($this->request->getPost("userid"),session_id());
-                if ($result->chg_pwd_flag == FALSE) {
-                    return redirect()->to('login/changepassword'); 
+                if ($sessid = $this->login_session->SelectSessionID($userid)) {
+                    $param = [
+                        'userid' => $userid
+                    ];
+        
+                    $this->session->set($param);
+        
+                    $data = [
+                        'message' => $this->session->getFlashdata('message'),
+                        'head' => view('head'),
+                        'foot' => view('foot_login')
+                    ];
+                    return view('session_warning', $data);
                 }else{
-                    return redirect()->to('home'); 
+                    $param = [
+                        'userid' => $result->id_user,
+                        'id' => $result->id_employee,
+                        'session_hash' => $this->encode->encode(session_id())
+                    ];
+                    $this->session->set($param);
+                    $this->login_session->InsertData($this->request->getPost("userid"),session_id());
+                    if ($result->chg_pwd_flag == FALSE) {
+                        return redirect()->to('login/changepassword'); 
+                    }else{
+                        return redirect()->to('home'); 
+                    }
                 }
             }else{
                 $this->session->setFlashdata('message',"<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Wrong input. Please try again.</div>");
@@ -55,6 +73,8 @@ class Login extends BaseController
             $this->session->setFlashdata('message',"<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Wrong input. Please try again.</div>");
             return redirect()->to('login'); 
         }
+        
+        
         //$result = $this->employee_mst->checkLogin($userid);
 
         //$this->login_session->InsertData($this->request->getPost("userid"),session_id());
@@ -204,6 +224,36 @@ class Login extends BaseController
             return redirect()->to('home'); 
         }
         
+    }
+
+    public function sesswarning()
+    {
+        if ($chk = $this->employee_mst->checkForgotPass($this->session->get("userid"),$this->request->getPost('email'))) {
+            if ($this->login_session->delSessionID($this->session->get("userid"))) {
+                if ($result = $this->employee_mst->SelectWhereUserID($this->session->get("userid"))) {
+                    $param = [
+                        'userid' => $result->id_user,
+                        'id' => $result->id_employee,
+                        'session_hash' => $this->encode->encode(session_id())
+                    ];
+                    $this->session->set($param);
+                    $this->login_session->InsertData($this->session->get("userid"),session_id());
+                    if ($result->chg_pwd_flag == FALSE) {
+                        return redirect()->to('login/changepassword'); 
+                    }else{
+                        return redirect()->to('home'); 
+                    }
+                }
+            }
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Error</h4>Wrong email.</div>");
+            $data = [
+                'message' => $this->session->getFlashdata('message'),
+                'head' => view('head'),
+                'foot' => view('foot_login')
+            ];
+            return view('session_warning', $data);
+        }
     }
 
 

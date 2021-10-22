@@ -29,7 +29,7 @@ class login_session extends Model
     }
 
     public function SelectSessionID($userid){
-        $sql="SELECT session_id FROM login_session where user_id = '".$userid."'";
+        $sql="SELECT * FROM login_session where user_id = '".$userid."'";
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
             $data = $result->getRow();
