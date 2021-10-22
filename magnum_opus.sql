@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2021 at 05:46 AM
+-- Generation Time: Oct 22, 2021 at 10:55 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -250,13 +250,6 @@ CREATE TABLE `login_session` (
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `login_session`
---
-
-INSERT INTO `login_session` (`id`, `user_id`, `session_id`, `date_created`) VALUES
-(50, 'admin1', 'ke55qhurvmko7cmoo9jkm4lqs9lo8cf8', '2021-10-22 01:37:55');
-
 -- --------------------------------------------------------
 
 --
@@ -318,6 +311,26 @@ CREATE TABLE `menu_level2` (
   `menu_name` varchar(100) NOT NULL,
   `parent` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_audit_trails`
+--
+
+CREATE TABLE `user_audit_trails` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `event` enum('insert','update','delete') NOT NULL,
+  `table_name` varchar(128) NOT NULL,
+  `old_values` text DEFAULT NULL,
+  `new_values` text NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `user_agent` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -391,6 +404,12 @@ ALTER TABLE `menu_level2`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_audit_trails`
+--
+ALTER TABLE `user_audit_trails`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -440,13 +459,13 @@ ALTER TABLE `employee_mst`
 -- AUTO_INCREMENT for table `login_session`
 --
 ALTER TABLE `login_session`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `menu_level1`
@@ -459,6 +478,12 @@ ALTER TABLE `menu_level1`
 --
 ALTER TABLE `menu_level2`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_audit_trails`
+--
+ALTER TABLE `user_audit_trails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
