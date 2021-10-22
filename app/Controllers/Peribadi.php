@@ -5,9 +5,10 @@ use App\Libraries\Password; // Import library
 use App\Libraries\Email;
 use App\Models\cm_sistem;
 use App\Models\cm_modul;
-use App\Models\ut_menu;
+use App\Models\menu;
 use App\Models\employee_mst;
 use App\Models\department_mst;
+use App\Models\menu_level1;
  
 use CodeIgniter\Controller;
  
@@ -20,7 +21,8 @@ class Peribadi extends Controller
         $this->session->start();
 		$this->cm_sistem = new cm_sistem;
 		$this->cm_modul = new cm_modul;
-		$this->ut_menu = new ut_menu;
+		$this->menu = new menu;
+		$this->menu_level1 = new menu_level1;
 		$this->employee_mst = new employee_mst;
 		$this->department_mst = new department_mst;
 		$this->encode = new Password();
@@ -28,6 +30,10 @@ class Peribadi extends Controller
     }
     
     public function daftarstaf(){
+        $menu = $this->menu->SenaraiSemua();
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+        };
         $data = [
             'alert' => $this->session->getFlashdata('message'),
             'head' => view('head'),
@@ -35,8 +41,7 @@ class Peribadi extends Controller
             'control_sidebar' => view('control_sidebar'),
             'sidemenu' => view('sidemenu', array(
                 'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'senaraimenulvl0' => $this->ut_menu->SenaraiLvl0(),
-                'senaraimenulvl1' => $this->ut_menu->senaraisemua(),
+                'menus' => $menu,
                 'uripath' => $this->request->getPath()
             )),
             'headermenu' => view('header_menu', array(

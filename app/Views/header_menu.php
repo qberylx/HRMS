@@ -19,6 +19,13 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
+          <li>
+          <p class="timertext" 
+        style="font-size: 1.5rem;">
+        You are idle for
+        <span class="secs"></span> seconds.
+    </p>
+          </li>
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
@@ -138,7 +145,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?=site_url("login")?>" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?=site_url("login/logout")?>" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

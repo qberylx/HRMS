@@ -4,11 +4,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ut_menu extends Model
+class menu extends Model
 {
     public function addmenu($data){
         var_dump($data);
-        $sql = "INSERT INTO ut_menu(nama_menu,parent,urutan,menu_url,menu_level) VALUES(?,?,?,?,?)";
+        $sql = "INSERT INTO menu(nama_menu,parent,urutan,menu_url,menu_level) VALUES(?,?,?,?,?)";
 
         if ($data['menuParent'] == 0) {
             $menulvl = 0;
@@ -28,7 +28,7 @@ class ut_menu extends Model
     }
 
     public function SenaraiSemua(){
-        $sql = "SELECT * FROM ut_menu";
+        $sql = "SELECT * FROM menu";
 
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
@@ -40,17 +40,25 @@ class ut_menu extends Model
         return false;
     }
 
-    public function SenaraiLvl0(){
-        $sql = "SELECT * FROM ut_menu where menu_level = 0";
+    public function menuDetail($id){
+        $sql = "SELECT * FROM menu where id = '".$id."'";
 
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
-            foreach ($result->getResult() as $row) {
-                $data[] = $row;
-            }
-            return $data;
+            return $result->getRow();
         }
         return false;
+    }
+
+    public function delByID($id)
+    {
+        $sql="DELETE FROM menu WHERE id = '".$id."'";
+        if ($this->db->query($sql))
+        {
+            return TRUE;
+        }
+            return FALSE;
+
     }
 
 }

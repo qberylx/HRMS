@@ -15,8 +15,17 @@ class CheckSession implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $session = \Config\Services::session();
+        $login_session = new \App\Models\login_session;
         if (!session('userid')) {
             return redirect()->to('/login/logout');
+        }else{
+            if (session_id() != $login_session->SelectSessionID(session('userid'))->session_id) {
+                //$session->destroy();
+                //$session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Session</h4>Something is wrong.</div>");
+                //return redirect()->to('login'); 
+                return redirect()->to('/login/logout');
+
+            }
         }
     }
 
