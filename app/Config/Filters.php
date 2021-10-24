@@ -61,7 +61,7 @@ class Filters extends BaseConfig
      * @var array
      */
     public $filters = [
-        'CheckSession' => ['before' => ['Home/*', 'Utilities/*', 'Peribadi/*']],
+        'CheckSession' => ['before' => ['Home/*', 'Utilities/*', 'Peribadi/*','Navigation/*']],
         'SessionOnLogin' => ['before' => ['Login/index','Login/authentication','']],
     ];
 }

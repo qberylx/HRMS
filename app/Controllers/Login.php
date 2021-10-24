@@ -55,6 +55,7 @@ class Login extends BaseController
                     $param = [
                         'userid' => $result->id_user,
                         'id' => $result->id_employee,
+                        'access_level' => $result->accesslevel_id,
                         'session_hash' => $this->encode->encode(session_id())
                     ];
                     $this->session->set($param);
@@ -118,6 +119,7 @@ class Login extends BaseController
                     $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Berjaya</h4>Katalaluan anda telah berjaya dikemaskini.</div>");
                     return redirect()->to('home'); 
                 }else{
+                    $this->session->destroy();
                     $this->session->setFlashdata('message',"<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Wrong input. Please try again.</div>");
                     return redirect()->to('login'); 
                 }
@@ -234,6 +236,7 @@ class Login extends BaseController
                     $param = [
                         'userid' => $result->id_user,
                         'id' => $result->id_employee,
+                        'access_level' => $result->accesslevel_id,
                         'session_hash' => $this->encode->encode(session_id())
                     ];
                     $this->session->set($param);
