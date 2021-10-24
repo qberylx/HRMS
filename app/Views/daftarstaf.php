@@ -40,7 +40,16 @@
                                         ?>
                                     </select>
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Access Level</label>
+                                    <select class="form-control" name="acc_level"  id="acc_level">
+                                        <?php
+                                            foreach ($acclvl_list as $accllvl) {
+                                                echo '<option value="'.$accllvl->id.'">'.$accllvl->access_name.'</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label>Nama</label>
                                     <input type="text" class="form-control" name="txt_nama" id="txt_nama">

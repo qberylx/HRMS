@@ -9,6 +9,7 @@ use App\Models\menu;
 use App\Models\employee_mst;
 use App\Models\department_mst;
 use App\Models\menu_level1;
+use App\Models\accesslevel_mst;
  
 use CodeIgniter\Controller;
  
@@ -27,12 +28,13 @@ class Peribadi extends Controller
 		$this->department_mst = new department_mst;
 		$this->encode = new Password();
         $this->email = new Email();
+        $this->accesslevel_mst = new accesslevel_mst();
     }
     
     public function daftarstaf(){
-        $menu = $this->menu->SenaraiSemua();
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
         foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
         };
         $data = [
             'alert' => $this->session->getFlashdata('message'),
@@ -49,15 +51,16 @@ class Peribadi extends Controller
             )),
             'senaraidept' => $this->department_mst->SenaraiSemua(),
             'userid' => $this->session->get('userid'),
-            'senaraistaf' => $this->employee_mst->SenaraiSemua()
+            'senaraistaf' => $this->employee_mst->SenaraiSemua(),
+            'acclvl_list' => $this->accesslevel_mst->SelectAll()
         ];
         return view('daftarstaf', $data);
     }
 
     public function senaraistaf(){
-        $menu = $this->menu->SenaraiSemua();
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
         foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
         };
 
         $staff = $this->employee_mst->SenaraiSemua();
@@ -84,9 +87,9 @@ class Peribadi extends Controller
     }
 
     public function maklumat_staf(){
-        $menu = $this->menu->SenaraiSemua();
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
         foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
         };
 
         $decode_id = $this->encrypter->decrypt(hex2bin($this->request->getGet('id')));

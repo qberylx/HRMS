@@ -25,9 +25,9 @@ class Home extends BaseController
 
     public function index()
     {
-        $menu = $this->menu->SenaraiSemua();
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
         foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
         };
 
         $data = [
@@ -49,9 +49,9 @@ class Home extends BaseController
     }
 
     public function senaraiaduan(){
-        $menu = $this->menu->SenaraiSemua();
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
         foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
         };
 
         $complaints = $this->cm01_mohon->selectAll();
@@ -78,9 +78,9 @@ class Home extends BaseController
     }
 
     public function complaint(){
-        $menu = $this->menu->SenaraiSemua();
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
         foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectWhereParent($val->id);
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
         };
 
         $decode_id = $this->encrypter->decrypt(hex2bin($this->request->getGet('id')));

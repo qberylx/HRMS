@@ -28,7 +28,7 @@
         <li class="header">MAIN NAVIGATION</li>
         <?php
           foreach ($menus as $menu) {
-            if (str_starts_with($uripath,$menu->menu_url) == true) {
+            if (((isset($_SESSION['menu'])) ? $_SESSION['menu'] : 0 ) == $menu->id) {
               echo '<li class="treeview active menu-open">';
             }else{
               echo '<li class="treeview">';
@@ -45,8 +45,8 @@
               foreach ($menu->menulvl1 as $menulvl1) {
                 if ($menulvl1->parent == $menu->id) {
             ?>
-                <li <?=1 == 1 ? "class='active'" : ''  ?>>
-                  <a href="<?=site_url($menulvl1->menu_url)?>">
+                <li <?=((isset($_SESSION['menulvl1'])) ? $_SESSION['menulvl1'] : 0 ) == $menulvl1->id ? "class='active'" : ''  ?>>
+                  <a href="<?=site_url('navigation/navigate/'.$menulvl1->parent.'/'.$menulvl1->id)?>">
                     <i class="fa fa-gg"></i > <span><?=$menulvl1->menu_name?></span>
                   </a>
                 </li>
