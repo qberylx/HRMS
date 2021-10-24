@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2021 at 10:55 AM
+-- Generation Time: Oct 24, 2021 at 05:28 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `magnum_opus`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `accesslevel_mst`
+--
+
+CREATE TABLE `accesslevel_mst` (
+  `id` int(11) NOT NULL,
+  `access_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `accesslevel_mst`
+--
+
+INSERT INTO `accesslevel_mst` (`id`, `access_name`) VALUES
+(1, 'admin'),
+(2, 'Programmer');
 
 -- --------------------------------------------------------
 
@@ -226,6 +245,7 @@ CREATE TABLE `employee_mst` (
   `email` varchar(250) NOT NULL,
   `image` blob DEFAULT NULL,
   `chg_pwd_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `accesslevel_id` bigint(20) NOT NULL,
   `file_name` varchar(250) DEFAULT NULL,
   `file_path` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -234,8 +254,30 @@ CREATE TABLE `employee_mst` (
 -- Dumping data for table `employee_mst`
 --
 
-INSERT INTO `employee_mst` (`id_employee`, `name`, `ic`, `id_dept`, `active_flag`, `pwd`, `mod_date`, `mod_by`, `create_date`, `create_by`, `id_user`, `email`, `image`, `chg_pwd_flag`, `file_name`, `file_path`) VALUES
-(10, 'Syafiq bin Jasmani', '871207145391', 2, 1, '$2y$11$u53zjWBWb49RRYrpu2q9Ye1kJ6kOLSG76gKi12ZZH0wnOOamkguf.', '2021-10-20 06:17:08', '', '2021-10-20 06:17:08', '', 'admin1', 'tk.sama87@gmail.com', NULL, 1, '1634710628_da464ded8228a8499661.png', 'C:\\xampp\\htdocs\\spa\\public/avatar');
+INSERT INTO `employee_mst` (`id_employee`, `name`, `ic`, `id_dept`, `active_flag`, `pwd`, `mod_date`, `mod_by`, `create_date`, `create_by`, `id_user`, `email`, `image`, `chg_pwd_flag`, `accesslevel_id`, `file_name`, `file_path`) VALUES
+(10, 'Syafiq bin Jasmani', '871207145391', 2, 1, '$2y$11$u53zjWBWb49RRYrpu2q9Ye1kJ6kOLSG76gKi12ZZH0wnOOamkguf.', '2021-10-20 06:17:08', '', '2021-10-20 06:17:08', '', 'admin1', 'tk.sama87@gmail.com', NULL, 1, 1, '1634710628_da464ded8228a8499661.png', 'C:\\xampp\\htdocs\\spa\\public/avatar'),
+(11, 'Takeru Kimura', '852152152252', 2, 1, '$2y$11$yGTNNAeJKbFCsuFzbvJXtOZ5KDDrqAPbxbNbrL342XdaQ5yckxaaS', '2021-10-24 00:50:15', 'admin1', '2021-10-24 00:50:15', 'admin1', 'nyamo', 'syafiq.jasmani87@gmail.com', NULL, 1, 2, '1635036615_103ade78df70e23aef2b.jpg', 'C:\\xampp\\htdocs\\spa\\public/avatar');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `groupaccess_mst`
+--
+
+CREATE TABLE `groupaccess_mst` (
+  `id` bigint(20) NOT NULL,
+  `accesslevel_id` bigint(20) NOT NULL,
+  `menu_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `groupaccess_mst`
+--
+
+INSERT INTO `groupaccess_mst` (`id`, `accesslevel_id`, `menu_id`) VALUES
+(1, 1, 5),
+(3, 2, 2),
+(5, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -249,6 +291,13 @@ CREATE TABLE `login_session` (
   `session_id` varchar(200) NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `login_session`
+--
+
+INSERT INTO `login_session` (`id`, `user_id`, `session_id`, `date_created`) VALUES
+(70, 'nyamo', 'oplp85go09gks59ahn5s560r834gpihv', '2021-10-24 01:11:36');
 
 -- --------------------------------------------------------
 
@@ -271,8 +320,8 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`id`, `nama_menu`, `parent`, `urutan`, `menu_url`, `menu_level`) VALUES
 (1, 'Aduan', 0, 1, '/home', 0),
-(2, 'Utiliti', 0, 2, '/utilities', 0),
-(6, 'Peribadi', 0, 3, '/peribadi', 0);
+(2, 'Utiliti', 0, 3, '/utilities', 0),
+(6, 'Peribadi', 0, 2, '/peribadi', 0);
 
 -- --------------------------------------------------------
 
@@ -297,7 +346,9 @@ INSERT INTO `menu_level1` (`id`, `menu_order`, `code`, `menu_name`, `menu_url`, 
 (1, 1, '01', 'Menu', '/utilities/menu', 2),
 (2, 1, '01', 'Registration', '/peribadi/daftarstaf', 6),
 (3, 1, '', 'Registration', '/home/index', 1),
-(4, 2, '', 'List', '/home/senaraiaduan', 1);
+(4, 2, '', 'List', '/home/senaraiaduan', 1),
+(5, 2, '', 'Access Level', '/utilities/accesslevel', 2),
+(7, 0, '', 'Group Access', '/utilities/groupaccess', 2);
 
 -- --------------------------------------------------------
 
@@ -335,6 +386,12 @@ CREATE TABLE `user_audit_trails` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `accesslevel_mst`
+--
+ALTER TABLE `accesslevel_mst`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cm01_mohon`
@@ -380,6 +437,12 @@ ALTER TABLE `employee_mst`
   ADD PRIMARY KEY (`id_employee`);
 
 --
+-- Indexes for table `groupaccess_mst`
+--
+ALTER TABLE `groupaccess_mst`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `login_session`
 --
 ALTER TABLE `login_session`
@@ -412,6 +475,12 @@ ALTER TABLE `user_audit_trails`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `accesslevel_mst`
+--
+ALTER TABLE `accesslevel_mst`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cm01_mohon`
@@ -453,13 +522,19 @@ ALTER TABLE `department_mst`
 -- AUTO_INCREMENT for table `employee_mst`
 --
 ALTER TABLE `employee_mst`
-  MODIFY `id_employee` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_employee` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `groupaccess_mst`
+--
+ALTER TABLE `groupaccess_mst`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `login_session`
 --
 ALTER TABLE `login_session`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `menu`
@@ -471,7 +546,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `menu_level1`
 --
 ALTER TABLE `menu_level1`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `menu_level2`
