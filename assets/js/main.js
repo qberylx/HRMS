@@ -18,3 +18,33 @@ $(document).on("click",".img-lampiran",function(){
     $('.imgpreview').attr('src', $(this).find('img').attr('src'));
     $('#modal-lampiran').modal('show'); 
 })
+
+$(document).on('change','.chk_menulvl1-groupaccess',function(){
+    if ($(this).is(':checked')) {
+        $.ajax({
+            url: "../utilities/update_groupaccess",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                accesslevel_id : $("#hidaccesslvlID").val(),
+                menu_id : $(this).val()
+            }, // added data type
+            success: function(res) {
+                console.log(res)
+            }
+        });
+    }else{
+        $.ajax({
+            url: "../utilities/delete_groupaccess",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                accesslevel_id : $("#hidaccesslvlID").val(),
+                menu_id : $(this).val()
+            }, // added data type
+            success: function(res) {
+                console.log(res)
+            }
+        });
+    }
+})
