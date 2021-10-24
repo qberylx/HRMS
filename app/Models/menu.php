@@ -22,7 +22,24 @@ class menu extends Model
     }
 
     public function SenaraiSemua(){
-        $sql = "SELECT * FROM menu";
+        $sql = "SELECT * FROM menu ORDER BY urutan";
+
+        $result = $this->db->query($sql);
+        if ($result->getNumRows() > 0) {
+            foreach ($result->getResult() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
+
+    public function SelectByAccessLvl($accesslvl){
+        $sql = "select A.id, nama_menu from menu A ".
+        "left join menu_level1 B ON B.parent = A.id ".
+        "left join groupaccess_mst C ON C.menu_id = B.id ".
+        "WHERE C.accesslevel_id = '".$accesslvl."' ".
+        "group by A.id, nama_menu";
 
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {

@@ -58,8 +58,8 @@ class employee_mst extends Model
             return false;
         }else{
 
-            $sql = "INSERT INTO employee_mst(id_user,name,ic,id_dept,mod_by,create_by,email,pwd,file_name,file_path) VALUES(?,?,?,?,?,?,?,?,?,?)";
-            $value = [$data['txt_iduser'],$data['txt_nama'],$data['txt_ic'],$data['sel_dept'],$data['userid'],$data['userid'],$data['txt_emel'],$data['pass'],$data['namadokumen'],$data['lokasi']];
+            $sql = "INSERT INTO employee_mst(id_user,name,ic,id_dept,mod_by,create_by,email,pwd,file_name,file_path,accesslevel_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            $value = [$data['txt_iduser'],$data['txt_nama'],$data['txt_ic'],$data['sel_dept'],$data['userid'],$data['userid'],$data['txt_emel'],$data['pass'],$data['namadokumen'],$data['lokasi'],$data['acc_level']];
 
             $this->db->query($sql,$value);
 
@@ -90,8 +90,7 @@ class employee_mst extends Model
     }
 
     public function updatePassword($user_id,$password){
-        $sql = "UPDATE employee_mst set pwd = '".$password."', chg_pwd_flag = 1 where id_user = '".$user_id."'";
-
+        $sql = "UPDATE employee_mst set pwd = '".$password."', chg_pwd_flag = 1 where id_employee = '".$user_id."'";
         $this->db->query($sql);
         if ($this->db->affectedRows() == '1')
         {
