@@ -48,3 +48,32 @@ $(document).on('change','.chk_menulvl1-groupaccess',function(){
         });
     }
 })
+
+
+$(document).on('click','.del-menu', function(e){
+    var value = $(this).val()
+    confirmDialog('YOUR_MESSAGE_STRING_CONST', value, function(){
+        window.location.href = value;
+    });
+});
+
+function confirmDialog(message, val, onConfirm){
+    var fClose = function(){
+        modal.modal("hide");
+    };
+    var modal = $("#confirm-modal-danger");
+    modal.modal("show");
+    $("#confirmOk").unbind().one('click', onConfirm).one('click', fClose);
+    $("#confirmCancel").unbind().one("click", fClose);
+}
+
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if ( (charCode > 31 && charCode < 48) || charCode > 57) {
+        return false;
+    }
+    return true;
+}
+

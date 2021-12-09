@@ -1,0 +1,12 @@
+ERROR - 2021-10-31 21:16:26 --> Table 'magnum_opus.ut_appbyacclvl' doesn't exist
+CRITICAL - 2021-10-31 21:16:26 --> Table 'magnum_opus.ut_appbyacclvl' doesn't exist
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('select A.approv...')
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('select A.approv...')
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('select A.approv...')
+#3 D:\xampp\htdocs\SPA\app\Models\ut_appbyacclvl.php(16): CodeIgniter\Database\BaseConnection->query('select A.approv...')
+#4 D:\xampp\htdocs\SPA\app\Controllers\Utilities.php(208): App\Models\ut_appbyacclvl->SelectAll()
+#5 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Utilities->approver_by_access_level()
+#6 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Utilities))
+#7 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 {main}

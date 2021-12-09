@@ -56,6 +56,9 @@
                                 ?>
                             </tbody>
                         </table>
+						<div class="pull-right">
+							<?= $pager?>
+						</div>
 					</div>
 					<!-- /.box-body -->
 					<div class="box-footer">

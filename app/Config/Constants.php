@@ -77,3 +77,21 @@ defined('EXIT_USER_INPUT')     || define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       || define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+
+/*
+| --------------------------------------------------------------------------
+| Dynamic Baseurl
+| --------------------------------------------------------------------------
+*/
+$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://'.$_SERVER['HTTP_HOST'] : 'http://'.$_SERVER['HTTP_HOST'];
+$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$path = parse_url($actual_link, PHP_URL_PATH);
+if (strpos($actual_link,"spa")) {
+    $actual_link = $protocol."/spa";
+    defined('BASE') || define('BASE',$actual_link);
+}else{
+    defined('BASE') || define('BASE',$protocol);
+
+}

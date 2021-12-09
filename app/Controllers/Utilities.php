@@ -4,13 +4,14 @@ namespace App\Controllers;
 use App\Models;
 helper('array');
 helper('form');
-
+use App\Libraries;
 
 class Utilities extends BaseController
 {
     function __construct()
     {
 
+        $this->encrypter = \Config\Services::encrypter(); // start the encryption service
         $this->session = \Config\Services::session();
         $this->session->start();
         $this->uri = new \CodeIgniter\HTTP\URI();
@@ -22,55 +23,27 @@ class Utilities extends BaseController
 		$this->employee_mst = new Models\employee_mst;
 		$this->accesslevel_mst = new Models\accesslevel_mst;
         $this->groupaccess_mst = new Models\groupaccess_mst;
-
+        $this->ui = new Libraries\Userinterface;
+        $this->encryption = new Libraries\Encryption;
+        $this->ut_appbyacclvl  = new Models\ut_appbyacclvl;
+        $this->department_mst = new Models\department_mst;
+        $this->ut_appbydep = new Models\ut_appbydep;
     }
 
     public function menu()
     {
-        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
-        foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
-        };
-        $data = [
-            'alert' => $this->session->getFlashdata('message'),
-            'head' => view('head'),
-            'foot' => view('foot'),
-            'control_sidebar' => view('control_sidebar'),
-            'sidemenu' => view('sidemenu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'menus' => $menu,
-                'uripath' => $this->request->getPath()
-            )),
-            'headermenu' => view('header_menu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
-            )),
-            'senaraimenu' => $this->menu->SenaraiSemua()
-        ];
+        $data = $this->ui->mainUI();
+        $data['senaraimenu'] = $this->menu->SenaraiSemua();
+
         return view('ut_menu', $data);
     }
 
     public function menulvl1($id)
     {
-        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
-        foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
-        };
-        $data = [
-            'alert' => $this->session->getFlashdata('message'),
-            'head' => view('head'),
-            'foot' => view('foot'),
-            'control_sidebar' => view('control_sidebar'),
-            'sidemenu' => view('sidemenu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'menus' => $menu,
-                'uripath' => $this->request->getPath()
-            )),
-            'headermenu' => view('header_menu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
-            )),
-            'senaraimenu' => $this->menu_level1->SelectWhereParent($id),
-            'menu_detail' => $this->menu->menuDetail($id)
-        ];
+        $data = $this->ui->mainUI();
+        $data['senaraimenu'] = $this->menu_level1->SelectWhereParent($id);
+        $data['menu_detail'] = $this->menu->menuDetail($id);
+
         return view('menulvl1', $data);
     }
 
@@ -113,26 +86,10 @@ class Utilities extends BaseController
 
     public function accesslevel()
     {
-        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
-        foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
-        };
-        $data = [
-            'alert' => $this->session->getFlashdata('message'),
-            'head' => view('head'),
-            'foot' => view('foot'),
-            'control_sidebar' => view('control_sidebar'),
-            'sidemenu' => view('sidemenu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'menus' => $menu,
-                'uripath' => $this->request->getPath()
-            )),
-            'headermenu' => view('header_menu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
-            )),
-            'menu_detail' => $this->menu_level1->SelectWhereID($this->session->get("menulvl1")),
-            'accesslvl_list' => $this->accesslevel_mst->SelectAll()
-        ];
+        $data = $this->ui->mainUI();
+        $data['menu_detail'] = $this->menu_level1->SelectWhereID($this->session->get("menulvl1"));
+        $data['accesslvl_list'] = $this->accesslevel_mst->SelectAll();
+
         return view('accesslevel', $data);
     }
 
@@ -165,11 +122,7 @@ class Utilities extends BaseController
 
     public function groupaccess()
     {
-        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
-        foreach ($menu as $val) {
-            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
-        };
-        $access_data = [];
+        $access_data = array();
         if ($this->request->getPost()) {
             $access_data = $this->menu->SenaraiSemua();
             foreach ($access_data as $val) {
@@ -180,22 +133,10 @@ class Utilities extends BaseController
             };
         }
         
-        $data = [
-            'alert' => $this->session->getFlashdata('message'),
-            'head' => view('head'),
-            'foot' => view('foot'),
-            'control_sidebar' => view('control_sidebar'),
-            'sidemenu' => view('sidemenu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
-                'menus' => $menu,
-                'uripath' => $this->request->getPath()
-            )),
-            'headermenu' => view('header_menu', array(
-                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid"))
-            )),
-            'accesslvls' => $this->accesslevel_mst->SelectAll(),
-            'groupaccess_data' => $access_data
-        ];
+        $data = $this->ui->mainUI();
+        $data['accesslvls'] = $this->accesslevel_mst->SelectAll();
+        $data['groupaccess_data'] = $access_data;
+
         return view('groupaccess', $data);
     }
 
@@ -213,4 +154,209 @@ class Utilities extends BaseController
     {
         echo json_encode($this->groupaccess_mst->delByaccIDmenuID($this->request->getPost('accesslevel_id'),$this->request->getPost('menu_id')));
     }
+
+    public function department()
+    {
+        $menu = $this->menu->SelectByAccessLvl($this->session->get('access_level'));
+        foreach ($menu as $val) {
+            $val->menulvl1 = $this->menu_level1->SelectByAccessLvl($val->id, $this->session->get("access_level"));
+        };
+        $data = [
+            'alert' => $this->session->getFlashdata('message'),
+            'head' => view('head'),
+            'foot' => view('foot'),
+            'control_sidebar' => view('control_sidebar'),
+            'sidemenu' => view('sidemenu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
+                'menus' => $menu,
+                'uripath' => $this->request->getPath()
+            )),
+            'headermenu' => view('header_menu', array(
+                'userinfo' => $this->employee_mst->SelectWhereUserID($this->session->get("userid")),
+                'id_encode' => bin2hex($this->encrypter->encrypt($this->session->get("userid")))
+            )),
+            'senaraidept' => $this->department_mst->SenaraiSemua()
+        ];
+        return view('department', $data);
+    }
+
+    public function submit_department()
+    {   
+        $params =  $this->request->getPost();
+
+        if ($this->department_mst->InsertData($params)) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data successfully inserted.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Code alredy exist in database.</div>");
+        }
+        return redirect()->to('utilities/department');
+    }
+
+
+    public function deldepartment($id)
+    {
+        if ($this->department_mst->delByID($id)) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data Deleted.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+            return redirect()->to('utilities/department'); 
+    }
+
+    public function approver_by_access_level()
+    {
+        $approver_list = $this->ut_appbyacclvl->SelectAll();
+        foreach ($approver_list as $key) {
+            $key->encode_id = $this->encryption->encode($key->approver_id);
+        }
+
+        $data = $this->ui->mainUI();
+        $data['accesslvls'] = $this->accesslevel_mst->SelectAll();
+        $data['approver_list'] = $approver_list;
+
+        if ($this->request->getGET('id')) {
+            $data['get'] = $this->ut_appbyacclvl->SelectWhereID($this->encryption->decode($this->request->getGET('id')));
+        };
+        return view('approverbyaccesslvl', $data);
+    }
+
+    public function submit_approver_by_access_level()
+    {
+        if ($this->ut_appbyacclvl->InsertData($this->request->getPost())) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data inserted successfully.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+        return redirect()->to('utilities/approver_by_access_level'); 
+    }
+
+    public function del_approver_by_access_level($id)
+    {
+        if ($this->ut_appbyacclvl->delData($id)) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data Deleted.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+            return redirect()->to('utilities/approver_by_access_level'); 
+    }
+
+    public function update_approver_by_access_level()
+    {
+        if ($this->ut_appbyacclvl->UpdateData($this->request->getPost(),$this->encryption->decode($this->request->getGET('id')))) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data updated successfully.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+        return redirect()->to('utilities/approver_by_access_level'); 
+    }
+
+    public function approver_by_department()
+    {
+        
+        $approver_list = $this->ut_appbydep->SelectAll();
+        foreach ($approver_list as $key) {
+            $key->encode_id = $this->encryption->encode($key->approver_id);
+        }
+        $data = $this->ui->mainUI();
+        $data['senaraidept'] = $this->department_mst->SenaraiSemua();
+        $data['approver_list'] = $approver_list;
+
+        if ($this->request->getGET('id')) {
+            $data['get'] = $this->ut_appbydep->SelectWhereID($this->encryption->decode($this->request->getGET('id')));
+        };
+        return view('approverbydep', $data);
+    }
+
+    public function submit_approver_by_department()
+    {
+        if ($this->ut_appbydep->InsertData($this->request->getPost())) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data inserted successfully.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+        return redirect()->to('utilities/approver_by_department'); 
+    }
+
+    public function del_approver_by_departmen($id)
+    {
+        if ($this->ut_appbydep->delData($id)) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data Deleted.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+            return redirect()->to('utilities/approver_by_department'); 
+    }
+
+    public function update_approver_by_department()
+    {
+        if ($this->ut_appbydep->UpdateData($this->request->getPost(),$this->encryption->decode($this->request->getGET('id')))) {
+            $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data updated successfully.</div>");
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+        return redirect()->to('utilities/approver_by_department'); 
+    }
+
+    public function menu_up($id)
+    {
+        $result = $this->menu->menuDetail($id);
+
+        if ($result->urutan == 1) {
+            $urutan = 1;
+        }else{
+            $urutan = $result->urutan - 1;
+        }
+
+
+        if ($this->menu->UpdateOrder($urutan,$id)) {
+            return redirect()->to('utilities/menu'); 
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+    }
+
+    public function menu_down($id)
+    {
+        $result = $this->menu->menuDetail($id);
+
+        $urutan = $result->urutan + 1;
+
+        if ($this->menu->UpdateOrder($urutan,$id)) {
+            return redirect()->to('utilities/menu'); 
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+    }
+
+    public function menulvl1_up($id)
+    {
+        $result = $this->menu_level1->SelectWhereID($id);
+        
+        if ($result->menu_order == 1) {
+            $urutan = 1;
+        }else{
+            $urutan = $result->menu_order - 1;
+        }
+
+
+        if ($this->menu_level1->UpdateOrder($urutan,$id)) {
+            return redirect()->to('utilities/menulvl1/'.$result->parent); 
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+    }
+
+    public function menulvl1_down($id)
+    {
+        $result = $this->menu_level1->SelectWhereID($id);
+
+        $urutan = $result->menu_order + 1;
+
+        if ($this->menu_level1->UpdateOrder($urutan,$id)) {
+            return redirect()->to('utilities/menulvl1/'.$result->parent); 
+        }else{
+            $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
+        }
+    }
+
 }

@@ -7,11 +7,25 @@ use CodeIgniter\Model;
 class menu_level1 extends Model
 {
     public function addmenu($data){
-        $sql = "INSERT INTO menu_level1(menu_name,parent,menu_url) VALUES(?,?,?)";
+        $session = \Config\Services::session();
+        
+        $sql_count = "SELECT MAX(menu_order) as total FROM menu_level1 WHERE parent = '".$data['parent']."'";
+        $result = $this->db->query($sql_count);
+        $next_order = $result->getRow()->total + 1;
 
-        $value = [$data['menu_name'],$data['parent'],$data['menu_url']];
+        $sql = "INSERT INTO menu_level1(menu_name,parent,menu_url,menu_order) VALUES(?,?,?,?)";
+
+        $value = [$data['menu_name'],$data['parent'],$data['menu_url'],$next_order];
 
         $this->db->query($sql,$value);
+
+        $menulvl1_id = $session->getFlashdata("insertID");
+
+        $sql2 = "INSERT INTO groupaccess_mst(accesslevel_id,menu_id) VALUES(?,?)";
+
+        $value2 = [1,$menulvl1_id];
+
+        $this->db->query($sql2,$value2);
 
         if ($this->db->affectedRows() == '1')
         {
@@ -22,7 +36,7 @@ class menu_level1 extends Model
 
     public function SelectWhereParent($id){
         $data = [];
-        $sql = "SELECT * FROM menu_level1 where parent = '".$id."'";
+        $sql = "SELECT * FROM menu_level1 where parent = '".$id."' order by menu_order";
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
             foreach ($result->getResult() as $row) {
@@ -34,9 +48,10 @@ class menu_level1 extends Model
     }
 
     public function SelectByAccessLvl($parent_id,$accesslvl){
+        $data = [];
         $sql = "select * from menu_level1 A ".
         "left join groupaccess_mst B ON B.menu_id = A.id ".
-        "WHERE B.accesslevel_id = '".$accesslvl."' AND parent = '".$parent_id."'";
+        "WHERE B.accesslevel_id = '".$accesslvl."' AND parent = '".$parent_id."' order by menu_order";
 
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
@@ -45,7 +60,7 @@ class menu_level1 extends Model
             }
             return $data;
         }
-        return false;
+        return $data;
     }
 
     public function SelectWhereID($id){
@@ -66,6 +81,23 @@ class menu_level1 extends Model
         }
             return FALSE;
 
+    }
+
+    public function UpdateOrder($data,$where)
+    {
+        
+        $db = $this->db->table('menu_level1');
+        $data = [
+            'menu_order' => $data
+        ];
+        $where = [
+            'id' => $where
+        ];
+
+        if ($db->update($data,$where)) {
+            return true;
+        }
+            return false;
     }
 
 }

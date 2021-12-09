@@ -69,8 +69,8 @@
                                             <td><?=$val->menu_name?></td>
                                             <td><?=$val->menu_url?></td>
                                             <td class="text-center">
-                                                <a type="button" href="<?=site_url('')?>" class="btn btn-info"><i class="fa fa-arrow-up"></i></a>
-                                                <a type="button" href="<?=site_url('')?>" class="btn btn-warning"><i class="fa fa-arrow-down"></i></a>
+                                                <a type="button" href="<?=site_url('utilities/menulvl1_up/'.$val->id)?>" class="btn btn-info"><i class="fa fa-arrow-up"></i></a>
+                                                <a type="button" href="<?=site_url('utilities/menulvl1_down/'.$val->id)?>" class="btn btn-warning"><i class="fa fa-arrow-down"></i></a>
                                                 <a type="button" href="<?=site_url('utilities/delmenulvl1/'.$val->id)?>" class="btn btn-danger"><i class="fa fa-remove"></i></a>
                                             </td>
                                         </tr>

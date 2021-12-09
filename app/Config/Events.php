@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
+use App\Models\audit_log;
 
 /*
  * --------------------------------------------------------------------
@@ -46,5 +47,32 @@ Events::on('pre_system', static function () {
     if (CI_DEBUG && ! is_cli()) {
         Events::on('DBQuery', 'CodeIgniter\Debug\Toolbar\Collectors\Database::collect');
         Services::toolbar()->respond();
+    }
+});
+
+
+Events::on("DBQuery", function($val){
+    $audit = new audit_log;
+
+    if (strcasecmp(substr($val,0,6),"insert") == 0) {
+        if (!str_contains($val,'audit_log')) {
+            $data = array(
+                'user_id' => $_SESSION['userid'],
+                'query' => $val
+            );
+            echo $audit->InsertData($data);
+        }
+    }elseif (strcasecmp(substr($val,0,6),"delete") == 0) {
+        $data = array(
+            'user_id' => $_SESSION['userid'],
+            'query' => $val
+        );
+        echo $audit->InsertData($data);
+    }elseif (strcasecmp(substr($val,0,6),"update") == 0) {
+        $data = array(
+            'user_id' => $_SESSION['userid'],
+            'query' => $val
+        );
+        echo $audit->InsertData($data);
     }
 });

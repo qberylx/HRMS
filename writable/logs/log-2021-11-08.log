@@ -1,0 +1,21 @@
+CRITICAL - 2021-11-08 21:24:13 --> syntax error, unexpected variable "$image", expecting "," or ";"
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Router\Router.php(160): CodeIgniter\Router\Router->autoRoute('/peribadi/senar...')
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(702): CodeIgniter\Router\Router->handle('/peribadi/senar...')
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(358): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-11-08 21:37:10 --> syntax error, unexpected string content "", expecting "-" or identifier or variable or number
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Router\Router.php(160): CodeIgniter\Router\Router->autoRoute('/peribadi/dafta...')
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(702): CodeIgniter\Router\Router->handle('/peribadi/dafta...')
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(358): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-11-08 21:38:53 --> Array to string conversion
+#0 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(229): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string...', 'D:\\xampp\\htdocs...', 229)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}

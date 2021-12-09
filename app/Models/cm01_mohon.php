@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 class cm01_mohon extends Model
 {
     public function mohon($data){
+        $session = \Config\Services::session();
+        
         $sql = "INSERT INTO cm01_mohon(cm01_userid,cm01_sysid,cm01_modulid,cm01_klasimodul,cm01_klasiproses,cm01_klasiskrin,cm01_klasibug,cm01_klasilaporan,cm01_ulasan) VALUES(?,?,?,?,?,?,?,?,?)";
 
         if (isset($data['klasimodul']) == true) {
@@ -45,17 +47,18 @@ class cm01_mohon extends Model
 
         if ($this->db->affectedRows() == '1')
         {
-            return $this->db->insertID();
+            return $session->getFlashdata("insertID");
         }
             return FALSE;
     }
 
-    public function selectAll(){
+    public function selectAll($limit,$offset){
         $sql = "select a.cm01_id, b.namasistem, c.namamodul, a.cm01_klasimodul, a.cm01_klasiproses, ".
         "a.cm01_klasiskrin, a.cm01_klasibug, a.cm01_klasilaporan, a.cm01_ulasan, d.butiran as butiranstatusdok from cm01_mohon a ".
         "left join cm_sistem b on b.id = a.cm01_sysid ".
         "left join cm_modul c on c.id = a.cm01_modulid ".
-        "left join cm_statusdok d on d.kod = a.cm01_statusdok ";
+        "left join cm_statusdok d on d.kod = a.cm01_statusdok ".
+        "limit ".$limit." offset ".$offset." ";
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
             foreach ($result->getResult() as $row) {
@@ -64,6 +67,17 @@ class cm01_mohon extends Model
             return $data;
         }
         return false;
+    }
+
+    public function CountselectAll()
+    {
+        $sql = "select count(*) as total from cm01_mohon a ".
+        "left join cm_sistem b on b.id = a.cm01_sysid ".
+        "left join cm_modul c on c.id = a.cm01_modulid ".
+        "left join cm_statusdok d on d.kod = a.cm01_statusdok ";
+        $result = $this->db->query($sql);
+
+        return $result->getRow('total');
     }
 
     public function selWhereID($id){

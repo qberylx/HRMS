@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2021 at 05:28 AM
+-- Generation Time: Oct 26, 2021 at 10:45 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -18,10 +18,35 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `magnum_opus`
+-- Database: `firstdb`
 --
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `audit_log`
+--
+
+
+CREATE TABLE `audit_log` (
+  `id` bigint(20) NOT NULL,
+  `user_id` varchar(20) NOT NULL,
+  `query` varchar(200) NOT NULL,
+  `ip_address` varchar(20) NOT NULL,
+  `user_agent` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
++-- Indexes for table `audit_log`
+--
+ALTER TABLE `audit_log`
+  ADD PRIMARY KEY (`id`);
+
+-- AUTO_INCREMENT for table `audit_log`
+--
+ALTER TABLE `audit_log`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+
 
 --
 -- Table structure for table `accesslevel_mst`
@@ -202,7 +227,7 @@ INSERT INTO `cm_statusdok` (`id`, `kod`, `butiran`) VALUES
 --
 
 CREATE TABLE `department_mst` (
-  `ID` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `code` varchar(2) NOT NULL,
   `name_bm` varchar(250) NOT NULL,
   `name_bi` varchar(250) NOT NULL
@@ -212,7 +237,7 @@ CREATE TABLE `department_mst` (
 -- Dumping data for table `department_mst`
 --
 
-INSERT INTO `department_mst` (`ID`, `code`, `name_bm`, `name_bi`) VALUES
+INSERT INTO `department_mst` (`id`, `code`, `name_bm`, `name_bi`) VALUES
 (1, '01', 'Facility Management', 'Facility Management'),
 (2, '02', 'IT', 'IT'),
 (5, '03', 'Admin', 'Admin'),
@@ -234,6 +259,7 @@ CREATE TABLE `employee_mst` (
   `id_employee` bigint(20) NOT NULL,
   `name` varchar(250) DEFAULT NULL,
   `ic` varchar(20) DEFAULT NULL,
+  `contact_no` varchar(12) DEFAULT NULL,
   `id_dept` bigint(20) NOT NULL,
   `active_flag` tinyint(1) NOT NULL DEFAULT 1,
   `pwd` varchar(250) NOT NULL,
@@ -254,9 +280,9 @@ CREATE TABLE `employee_mst` (
 -- Dumping data for table `employee_mst`
 --
 
-INSERT INTO `employee_mst` (`id_employee`, `name`, `ic`, `id_dept`, `active_flag`, `pwd`, `mod_date`, `mod_by`, `create_date`, `create_by`, `id_user`, `email`, `image`, `chg_pwd_flag`, `accesslevel_id`, `file_name`, `file_path`) VALUES
-(10, 'Syafiq bin Jasmani', '871207145391', 2, 1, '$2y$11$u53zjWBWb49RRYrpu2q9Ye1kJ6kOLSG76gKi12ZZH0wnOOamkguf.', '2021-10-20 06:17:08', '', '2021-10-20 06:17:08', '', 'admin1', 'tk.sama87@gmail.com', NULL, 1, 1, '1634710628_da464ded8228a8499661.png', 'C:\\xampp\\htdocs\\spa\\public/avatar'),
-(11, 'Takeru Kimura', '852152152252', 2, 1, '$2y$11$yGTNNAeJKbFCsuFzbvJXtOZ5KDDrqAPbxbNbrL342XdaQ5yckxaaS', '2021-10-24 00:50:15', 'admin1', '2021-10-24 00:50:15', 'admin1', 'nyamo', 'syafiq.jasmani87@gmail.com', NULL, 1, 2, '1635036615_103ade78df70e23aef2b.jpg', 'C:\\xampp\\htdocs\\spa\\public/avatar');
+INSERT INTO `employee_mst` (`id_employee`, `name`, `ic`, `contact_no`, `id_dept`, `active_flag`, `pwd`, `mod_date`, `mod_by`, `create_date`, `create_by`, `id_user`, `email`, `image`, `chg_pwd_flag`, `accesslevel_id`, `file_name`, `file_path`) VALUES
+(10, 'Syafiq bin Jasmani', '871207145391', '0123456789', 2, 1, '$2y$11$u53zjWBWb49RRYrpu2q9Ye1kJ6kOLSG76gKi12ZZH0wnOOamkguf.', '2021-10-24 19:38:27', 'admin1', '2021-10-20 06:17:08', '', 'admin1', 'tk.sama87@gmail.com', NULL, 1, 1, '1635151107_b303f17fe615befbf122.jpg', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar'),
+(11, 'Takeru Kimura', '852152152252', '01234567891', 2, 1, '$2y$11$yGTNNAeJKbFCsuFzbvJXtOZ5KDDrqAPbxbNbrL342XdaQ5yckxaaS', '2021-10-24 19:44:31', 'admin1', '2021-10-24 00:50:15', 'admin1', 'nyamo', 'syafiq.jasmani87@gmail.com', NULL, 1, 2, '1635151471_054a446260da9d92b61e.jpg', 'G:\\XAAMP\\htdocs\\SPA\\public/avatar');
 
 -- --------------------------------------------------------
 
@@ -277,7 +303,14 @@ CREATE TABLE `groupaccess_mst` (
 INSERT INTO `groupaccess_mst` (`id`, `accesslevel_id`, `menu_id`) VALUES
 (1, 1, 5),
 (3, 2, 2),
-(5, 2, 4);
+(5, 2, 4),
+(6, 1, 7),
+(7, 1, 2),
+(8, 1, 3),
+(9, 1, 4),
+(10, 1, 1),
+(11, 1, 8),
+(12, 1, 9);
 
 -- --------------------------------------------------------
 
@@ -297,7 +330,8 @@ CREATE TABLE `login_session` (
 --
 
 INSERT INTO `login_session` (`id`, `user_id`, `session_id`, `date_created`) VALUES
-(70, 'nyamo', 'oplp85go09gks59ahn5s560r834gpihv', '2021-10-24 01:11:36');
+(70, 'nyamo', 'oplp85go09gks59ahn5s560r834gpihv', '2021-10-24 01:11:36'),
+(73, 'admin1', '08bpo5uc2gdvbps2122auqop6u85ojop', '2021-10-26 02:35:09');
 
 -- --------------------------------------------------------
 
@@ -348,7 +382,9 @@ INSERT INTO `menu_level1` (`id`, `menu_order`, `code`, `menu_name`, `menu_url`, 
 (3, 1, '', 'Registration', '/home/index', 1),
 (4, 2, '', 'List', '/home/senaraiaduan', 1),
 (5, 2, '', 'Access Level', '/utilities/accesslevel', 2),
-(7, 0, '', 'Group Access', '/utilities/groupaccess', 2);
+(7, 0, '', 'Group Access', '/utilities/groupaccess', 2),
+(8, 2, '01', 'List', '/peribadi/senaraistaf', 6),
+(9, 0, '', 'Department', '/utilities/department', 2);
 
 -- --------------------------------------------------------
 
@@ -428,7 +464,7 @@ ALTER TABLE `cm_statusdok`
 -- Indexes for table `department_mst`
 --
 ALTER TABLE `department_mst`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `employee_mst`
@@ -516,7 +552,7 @@ ALTER TABLE `cm_statusdok`
 -- AUTO_INCREMENT for table `department_mst`
 --
 ALTER TABLE `department_mst`
-  MODIFY `ID` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `employee_mst`
@@ -528,13 +564,13 @@ ALTER TABLE `employee_mst`
 -- AUTO_INCREMENT for table `groupaccess_mst`
 --
 ALTER TABLE `groupaccess_mst`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `login_session`
 --
 ALTER TABLE `login_session`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `menu`
@@ -546,7 +582,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `menu_level1`
 --
 ALTER TABLE `menu_level1`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `menu_level2`

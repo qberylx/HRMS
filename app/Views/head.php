@@ -25,4 +25,10 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="<?=base_url("vendor/almasaeed2010/adminlte/")?>/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
+  <link rel="stylesheet" href="<?=base_url("assets/css/dropzone.min.css")?>">
+  <script  src="<?=base_url("assets/js/dropzone.min.js")?>"></script>
+  
 </head>

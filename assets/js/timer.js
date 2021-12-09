@@ -2,10 +2,6 @@ let timer, currSeconds = 0;
   
 function resetTimer() {
 
-    /* Hide the timer text */
-    document.querySelector(".timertext")
-            .style.display = 'none';
-
     /* Clear the previous interval */
     clearInterval(timer);
 
@@ -15,6 +11,9 @@ function resetTimer() {
     /* Set a new interval */
     timer = 
         setInterval(startIdleTimer, 1000);
+    
+    /*close moadl*/
+    $('#modal-danger').modal('hide')
 }
 
 // Define the events that
@@ -32,17 +31,15 @@ function startIdleTimer() {
         timer seconds */
     currSeconds++;
 
-    /* Set the timer text
-        to the new value */
-    document.querySelector(".secs")
-        .textContent = currSeconds;
-
-    /* Display the timer text */
-    document.querySelector(".timertext")
-        .style.display = 'block';
-
-    if (currSeconds == 1200) {
+    if (currSeconds == 1140) {
         $('#modal-danger').modal('show')
         //window.location.href = base_url+"/login/logout";
+    }
+
+    if (currSeconds >= 1140) {
+        $("#modalExpiredSec").html(1200-currSeconds)
+        if (currSeconds == 1200) {
+            window.location.href = "../login/logout";
+        }
     }
 }

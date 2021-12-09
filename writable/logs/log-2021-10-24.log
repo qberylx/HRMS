@@ -1,0 +1,31 @@
+ERROR - 2021-10-24 20:06:47 --> Table 'magnum_opus.groupaccess_mst' doesn't exist
+CRITICAL - 2021-10-24 20:06:47 --> Call to a member function getNumRows() on bool
+#0 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(35): App\Models\menu->SelectByAccessLvl(NULL)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->daftarstaf()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-24 20:06:53 --> Table 'magnum_opus.groupaccess_mst' doesn't exist
+CRITICAL - 2021-10-24 20:06:53 --> Call to a member function getNumRows() on bool
+#0 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(35): App\Models\menu->SelectByAccessLvl(NULL)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->daftarstaf()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+ERROR - 2021-10-24 20:06:56 --> Table 'magnum_opus.groupaccess_mst' doesn't exist
+CRITICAL - 2021-10-24 20:06:56 --> Call to a member function getNumRows() on bool
+#0 D:\xampp\htdocs\SPA\app\Controllers\Home.php(28): App\Models\menu->SelectByAccessLvl(NULL)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Home->index()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-10-24 20:59:53 --> foreach() argument must be of type array|object, bool given
+#0 D:\xampp\htdocs\SPA\app\Controllers\Home.php(29): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argum...', 'D:\\xampp\\htdocs...', 29)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Home->index()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}

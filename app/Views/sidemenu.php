@@ -9,7 +9,7 @@
         </div>
         <div class="pull-left info">
           <p><?=$userinfo->name?></p>
-          <?=$userinfo->name_bi?>
+          <?=$userinfo->name_bi?> (<?=strtoupper($userinfo->access_name)?>)
         </div>
       </div>
       <!-- search form -->
@@ -45,7 +45,7 @@
               foreach ($menu->menulvl1 as $menulvl1) {
                 if ($menulvl1->parent == $menu->id) {
             ?>
-                <li <?=((isset($_SESSION['menulvl1'])) ? $_SESSION['menulvl1'] : 0 ) == $menulvl1->id ? "class='active'" : ''  ?>>
+                <li <?=((isset($_SESSION['menulvl1'])) ? $_SESSION['menulvl1'] : 0 ) == $menulvl1->menu_id ? "class='active'" : ''  ?>>
                   <a href="<?=site_url('navigation/navigate/'.$menulvl1->parent.'/'.$menulvl1->menu_id)?>">
                     <i class="fa fa-gg"></i > <span><?=$menulvl1->menu_name?></span>
                   </a>

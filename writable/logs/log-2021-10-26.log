@@ -1,0 +1,61 @@
+ERROR - 2021-10-26 09:37:31 --> Table 'magnum_opus.audit_log' doesn't exist
+ERROR - 2021-10-26 09:37:57 --> Table 'magnum_opus.audit_log' doesn't exist
+ERROR - 2021-10-26 09:44:19 --> Table 'magnum_opus.audit_log' doesn't exist
+ERROR - 2021-10-26 09:44:27 --> Table 'magnum_opus.audit_log' doesn't exist
+CRITICAL - 2021-10-26 09:45:34 --> Undefined array key "namadokumen"
+#0 D:\xampp\htdocs\SPA\app\Models\employee_mst.php(94): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'D:\\xampp\\htdocs...', 94)
+#1 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(225): App\Models\employee_mst->update_mohon(Array)
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->update_application()
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#4 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+CRITICAL - 2021-10-26 09:47:42 --> Undefined array key "namadokumen"
+#0 D:\xampp\htdocs\SPA\app\Models\employee_mst.php(94): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'D:\\xampp\\htdocs...', 94)
+#1 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(225): App\Models\employee_mst->update_mohon(Array)
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->update_application()
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#4 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}
+ERROR - 2021-10-26 09:48:30 --> Table 'magnum_opus.audit_log' doesn't exist
+CRITICAL - 2021-10-26 09:48:30 --> Table 'magnum_opus.audit_log' doesn't exist
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('INSERT INTO aud...')
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO aud...')
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO aud...')
+#3 D:\xampp\htdocs\SPA\app\Models\audit_log.php(13): CodeIgniter\Database\BaseConnection->query('INSERT INTO aud...', Array)
+#4 D:\xampp\htdocs\SPA\app\Config\Events.php(76): App\Models\audit_log->InsertData(Array)
+#5 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}(Object(CodeIgniter\Database\Query))
+#6 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(629): CodeIgniter\Events\Events::trigger('DBQuery', Object(CodeIgniter\Database\Query))
+#7 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1875): CodeIgniter\Database\BaseConnection->query('UPDATE `employe...', Array, false)
+#8 D:\xampp\htdocs\SPA\app\Models\employee_mst.php(101): CodeIgniter\Database\BaseBuilder->update(Array)
+#9 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(225): App\Models\employee_mst->update_mohon(Array)
+#10 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->update_application()
+#11 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#12 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#13 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#14 {main}
+ERROR - 2021-10-26 09:51:38 --> Table 'magnum_opus.audit_log' doesn't exist
+CRITICAL - 2021-10-26 09:51:38 --> Table 'magnum_opus.audit_log' doesn't exist
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(280): mysqli->query('INSERT INTO aud...')
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(663): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO aud...')
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(591): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO aud...')
+#3 D:\xampp\htdocs\SPA\app\Models\audit_log.php(13): CodeIgniter\Database\BaseConnection->query('INSERT INTO aud...', Array)
+#4 D:\xampp\htdocs\SPA\app\Config\Events.php(63): App\Models\audit_log->InsertData(Array)
+#5 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Events\Events.php(149): CodeIgniter\Events\Events::Config\{closure}(Object(CodeIgniter\Database\Query))
+#6 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Database\BaseConnection.php(629): CodeIgniter\Events\Events::trigger('DBQuery', Object(CodeIgniter\Database\Query))
+#7 D:\xampp\htdocs\SPA\app\Models\employee_mst.php(64): CodeIgniter\Database\BaseConnection->query('INSERT INTO emp...', Array)
+#8 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(173): App\Models\employee_mst->mohon(Array)
+#9 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#10 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#11 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#13 {main}
+CRITICAL - 2021-10-26 10:01:09 --> Undefined array key "namadokumen"
+#0 D:\xampp\htdocs\SPA\app\Models\employee_mst.php(62): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'D:\\xampp\\htdocs...', 62)
+#1 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(173): App\Models\employee_mst->mohon(Array)
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#4 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#6 {main}

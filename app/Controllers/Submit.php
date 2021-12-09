@@ -45,7 +45,7 @@ class Submit extends BaseController
 
     public function mainmenu(){
         if ($this->menu->addmenu($this->request->getPost()) == true) {
-			$this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Berjaya</h4>Aduan anda telah berjaya dihantar untuk semakan. Terima kasih.</div>");
+			$this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Success</h4>Data inserted successfully.</div>");
 		} else {
 			$this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-ban'></i> Error</h4>Something is wrong.</div>");
 		}

@@ -25,75 +25,79 @@
 					</div>
 					<div class="box-body">
 						<?=form_open_multipart("submit/application")?>
-							<div class="form-group">
-								<label>Nama Sistem</label>
-								<select class="form-control" name="namaSistem"  id="namaSistem">
-									<option value="">Sila Pilih</option>
-									<?php
-										foreach ($senaraisistem as $val) {
-											echo '<option value="'.$val->id.'">'.$val->kod.' ('.$val->namasistem.')</option>';
-										}
-									?>
-								</select>
-							</div>
-							<div class="form-group">
-								<label>Modul</label>
-								<select class="form-control" name="subModul"  id="subModul">
-									<option value="">Sila Pilih</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label>Klasifikasi Permohonan</label>
-								<div class="checkbox">
-									<label>
-									<input type="checkbox" name="klasimodul" value="1">
-									Tambahbaik Modul
-									</label>
+						<div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+									<div class="form-group">
+										<label>Nama Sistem</label>
+										<select class="form-control" name="namaSistem"  id="namaSistem">
+											<option value="">Sila Pilih</option>
+											<?php
+												foreach ($senaraisistem as $val) {
+													echo '<option value="'.$val->id.'">'.$val->kod.' ('.$val->namasistem.')</option>';
+												}
+											?>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Modul</label>
+										<select class="form-control" name="subModul"  id="subModul">
+											<option value="">Sila Pilih</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Klasifikasi Permohonan</label>
+										<div class="checkbox">
+											<label>
+											<input type="checkbox" name="klasimodul" value="1">
+											Tambahbaik Modul
+											</label>
+										</div>
+
+										<div class="checkbox">
+											<label>
+											<input type="checkbox" name="klasiproses" value="1">
+											Tambahbaik Proses
+											</label>
+										</div>
+
+										<div class="checkbox">
+											<label>
+											<input type="checkbox" name="klasiskrin" value="1">
+											Tambahbaik Skrin
+											</label>
+										</div>
+
+										<div class="checkbox">
+											<label>
+											<input type="checkbox" name="klasibug" value="1">
+											Isu <i>Bug / Defect </i>
+											</label>
+										</div>
+
+										<div class="checkbox">
+											<label>
+											<input type="checkbox" name="klasilaporan" value="1">
+											Laporan
+											</label>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label>Ulasan</label>
+										<textarea class="form-control" rows="10" placeholder="Keterangan Aduan" name="ulasan"></textarea>
+									</div>
+
+									<div class="form-group">
+										<label for="lampiran">Lampiran</label>
+										<input type="file" name="lampiran[]" id="lampiran" class="custom-file-input" accept="image/*" multiple>
+										<p class="help-block custom-file-label"></p>
+										<p class="help-block">Sambil menekan butang <i>ctrl</i> untuk memilih lebih dari 1 lampiran</p>
+									</div>
+
+									<div class="pull-right">
+										<button type="submit" class="btn btn-block btn-primary">Submit</button>
+									</div>
 								</div>
-
-								<div class="checkbox">
-									<label>
-									<input type="checkbox" name="klasiproses" value="1">
-									Tambahbaik Proses
-									</label>
-								</div>
-
-								<div class="checkbox">
-									<label>
-									<input type="checkbox" name="klasiskrin" value="1">
-									Tambahbaik Skrin
-									</label>
-								</div>
-
-								<div class="checkbox">
-									<label>
-									<input type="checkbox" name="klasibug" value="1">
-									Isu <i>Bug / Defect </i>
-									</label>
-								</div>
-
-								<div class="checkbox">
-									<label>
-									<input type="checkbox" name="klasilaporan" value="1">
-									Laporan
-									</label>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label>Ulasan</label>
-								<textarea class="form-control" rows="10" placeholder="Keterangan Aduan" name="ulasan"></textarea>
-							</div>
-
-							<div class="form-group">
-								<label for="lampiran">Lampiran</label>
-								<input type="file" name="lampiran[]" id="lampiran" class="custom-file-input" accept="image/*" multiple>
-								<p class="help-block custom-file-label"></p>
-								<p class="help-block">Sambil menekan butang <i>ctrl</i> untuk memilih lebih dari 1 lampiran</p>
-							</div>
-
-							<div class="pull-right">
-								<button type="submit" class="btn btn-block btn-primary">Submit</button>
 							</div>
 						</form>
 					</div>

@@ -1,0 +1,88 @@
+CRITICAL - 2021-11-01 01:02:46 --> Call to a member function getName() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 01:07:55 --> Call to a member function getName() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 01:08:32 --> Call to a member function getName() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 01:19:26 --> Call to a member function isValid() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 08:02:06 --> Call to a member function isValid() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 08:02:22 --> Call to a member function isValid() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 20:24:09 --> Undefined array key "$imageName"
+#0 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(225): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'D:\\xampp\\htdocs...', 225)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-11-01 20:25:10 --> Undefined array key "imageName"
+#0 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(225): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'D:\\xampp\\htdocs...', 225)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-11-01 20:37:31 --> syntax error, unexpected variable "$imageName", expecting "function" or "const"
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\Router\Router.php(160): CodeIgniter\Router\Router->autoRoute('/peribadi/dafta...')
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(702): CodeIgniter\Router\Router->handle('/peribadi/dafta...')
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(358): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-11-01 20:38:16 --> Undefined array key "imageName"
+#0 D:\xampp\htdocs\SPA\app\Controllers\Peribadi.php(226): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array...', 'D:\\xampp\\htdocs...', 226)
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->application()
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#3 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 {main}
+CRITICAL - 2021-11-01 20:52:51 --> Call to undefined function App\Controllers\debug_to_console()
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->fileupload()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 20:53:00 --> Call to a member function getRandomName() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->fileupload()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 20:54:05 --> Call to undefined function App\Controllers\debug_to_console()
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->fileupload()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}
+CRITICAL - 2021-11-01 20:54:10 --> Call to a member function getName() on null
+#0 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(802): App\Controllers\Peribadi->fileupload()
+#1 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(399): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Peribadi))
+#2 D:\xampp\htdocs\SPA\vendor\codeigniter4\framework\system\CodeIgniter.php(317): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 D:\xampp\htdocs\SPA\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 {main}

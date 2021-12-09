@@ -4,10 +4,10 @@
         <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-        <h4 class="modal-title">Danger Modal</h4>
+        <h4 class="modal-title">You Have Been Idle For Too Long</h4>
         </div>
         <div class="modal-body">
-        <p>One fine body…</p>
+        <p>Your session will expired in <span id="modalExpiredSec"></span> second(s)</p>
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
@@ -17,6 +17,28 @@
     <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+</div>
+
+<div class="modal modal-danger fade" id="alertModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="alertModalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <p  id="alertModalBody"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-right" id="confirmCancel" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
 <!-- jQuery 3 -->
 <script src="<?=base_url("vendor/almasaeed2010/adminlte/")?>/bower_components/jquery/dist/jquery.min.js"></script>
@@ -35,6 +57,9 @@
 <script src="<?=base_url("assets/js/")?>/timer.js"></script>
 <!-- main javascript/jquery code -->
 <script src="<?=base_url("assets/js/")?>/main.js"></script>
+<!-- bootstrap datepicker -->
+<script src="<?=base_url("vendor/almasaeed2010/adminlte/")?>/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
 <script>
 $(document).ready(function () {
     $('.sidebar-menu').tree()
@@ -52,4 +77,14 @@ $(document).on("change", ".custom-file-input", function() {
     var fileName = files.map(f =>{return f.name}).join(", ")
     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
+
+//Date picker
+$('.datepicker').datepicker({
+    setDate: new Date(),
+    autoclose: true,
+    todayHighlight: true,
+    format: "dd-mm-yyyy"
+}).attr('readonly', 'readonly');
+$(".datepicker").datepicker("setDate", new Date());
+
 </script>

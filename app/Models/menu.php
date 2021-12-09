@@ -7,9 +7,13 @@ use CodeIgniter\Model;
 class menu extends Model
 {
     public function addmenu($data){
-        $sql = "INSERT INTO menu(nama_menu) VALUES(?)";
+        $sql_count = "SELECT MAX(urutan) as total FROM menu";
+        $result = $this->db->query($sql_count);
+        $next_order = $result->getRow()->total + 1;
 
-        $value = [$data['namamenu']];
+        $sql = "INSERT INTO menu(nama_menu,urutan) VALUES(?,?)";
+
+        $value = [$data['namamenu'],$next_order];
 
         $this->db->query($sql,$value);
 
@@ -35,11 +39,12 @@ class menu extends Model
     }
 
     public function SelectByAccessLvl($accesslvl){
+        $data = [];
         $sql = "select A.id, nama_menu from menu A ".
         "left join menu_level1 B ON B.parent = A.id ".
         "left join groupaccess_mst C ON C.menu_id = B.id ".
         "WHERE C.accesslevel_id = '".$accesslvl."' ".
-        "group by A.id, nama_menu";
+        "group by A.id, nama_menu order by A.urutan";
 
         $result = $this->db->query($sql);
         if ($result->getNumRows() > 0) {
@@ -48,7 +53,7 @@ class menu extends Model
             }
             return $data;
         }
-        return false;
+        return $data;
     }
 
     public function menuDetail($id){
@@ -70,6 +75,23 @@ class menu extends Model
         }
             return FALSE;
 
+    }
+
+    public function UpdateOrder($data,$where)
+    {
+        
+        $db = $this->db->table('menu');
+        $data = [
+            'urutan' => $data
+        ];
+        $where = [
+            'id' => $where
+        ];
+
+        if ($db->update($data,$where)) {
+            return true;
+        }
+            return false;
     }
 
 }

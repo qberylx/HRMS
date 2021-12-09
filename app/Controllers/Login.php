@@ -11,7 +11,7 @@ class Login extends BaseController
     public function __construct()
     {
         $this->session = \Config\Services::session();
-        $this->encode = new Password();
+        $this->pass = new Password();
         $this->email = new Email();
         $this->login_session = new Models\login_session;
         $this->employee_mst = new Models\employee_mst;
@@ -56,7 +56,7 @@ class Login extends BaseController
                         'userid' => $result->id_user,
                         'id' => $result->id_employee,
                         'access_level' => $result->accesslevel_id,
-                        'session_hash' => $this->encode->encode(session_id())
+                        'session_hash' => $this->pass->encode(session_id())
                     ];
                     $this->session->set($param);
                     $this->login_session->InsertData($this->request->getPost("userid"),session_id());
@@ -79,7 +79,7 @@ class Login extends BaseController
         //$result = $this->employee_mst->checkLogin($userid);
 
         //$this->login_session->InsertData($this->request->getPost("userid"),session_id());
-        //$token= $this->encode->encode($this->request->getPost('password'));
+        //$token= $this->pass->encode($this->request->getPost('password'));
         //return redirect()->to('home?token='.$token."&session=".session_id()); 
     }
 
@@ -115,7 +115,7 @@ class Login extends BaseController
                 </button></div>';
                 }
             }else{
-                if ($this->employee_mst->updatePassword($this->session->get("id"),$this->encode->encode($this->request->getPost("password1")))) {
+                if ($this->employee_mst->updatePassword($this->session->get("userid"),$this->pass->encode($this->request->getPost("password1")))) {
                     $this->session->setFlashdata('message', "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Berjaya</h4>Katalaluan anda telah berjaya dikemaskini.</div>");
                     return redirect()->to('home'); 
                 }else{
@@ -170,8 +170,9 @@ class Login extends BaseController
             }else{
                 if ($this->employee_mst->checkForgotPass($this->request->getPost("userid"),$this->request->getPost("email"))) {
 
-                    $new_pass = $this->encode->generateRandomString(6);
-                    if ($this->employee_mst->updatePassword($this->request->getPost("userid"),$this->encode->encode($new_pass))) {
+                    $new_pass = $this->pass->generateRandomString(6);
+                    $this->session->set('userid',$this->request->getPost("userid"));
+                    if ($this->employee_mst->updatePassword($this->request->getPost("userid"),$this->pass->encode($new_pass))) {
                         $message = '
                         Dear sir/madam,<br />
                         Your password for sign in at SPA has been changed after your request. Remember you can change your password in your Profile page.
@@ -188,6 +189,7 @@ class Login extends BaseController
                     }else{
                         $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Error</h4>Something went wrong.</div>");
                     }
+                    $this->session->destroy();
                 }else{
                     $this->session->setFlashdata('message', "<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><h4><i class='icon fa fa-check'></i> Error</h4>Something went wrong.</div>");
                 }
@@ -231,21 +233,20 @@ class Login extends BaseController
     public function sesswarning()
     {
         if ($chk = $this->employee_mst->checkForgotPass($this->session->get("userid"),$this->request->getPost('email'))) {
-            if ($this->login_session->delSessionID($this->session->get("userid"))) {
-                if ($result = $this->employee_mst->SelectWhereUserID($this->session->get("userid"))) {
-                    $param = [
-                        'userid' => $result->id_user,
-                        'id' => $result->id_employee,
-                        'access_level' => $result->accesslevel_id,
-                        'session_hash' => $this->encode->encode(session_id())
-                    ];
-                    $this->session->set($param);
-                    $this->login_session->InsertData($this->session->get("userid"),session_id());
-                    if ($result->chg_pwd_flag == FALSE) {
-                        return redirect()->to('login/changepassword'); 
-                    }else{
-                        return redirect()->to('home'); 
-                    }
+            $this->login_session->delSessionID($this->session->get("userid"));
+            if ($result = $this->employee_mst->SelectWhereUserID($this->session->get("userid"))) {
+                $param = [
+                    'userid' => $result->id_user,
+                    'id' => $result->id_employee,
+                    'access_level' => $result->accesslevel_id,
+                    'session_hash' => $this->pass->encode(session_id())
+                ];
+                $this->session->set($param);
+                $this->login_session->InsertData($this->session->get("userid"),session_id());
+                if ($result->chg_pwd_flag == FALSE) {
+                    return redirect()->to('login/changepassword'); 
+                }else{
+                    return redirect()->to('home'); 
                 }
             }
         }else{
